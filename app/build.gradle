@@ -27,7 +27,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    // Cloud Firestore
+    implementation 'com.google.firebase:firebase-firestore:18.0.0'
+    // Google Play - Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
 // Firebase
