@@ -1,5 +1,6 @@
 package com.hwang.xsighting;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,16 +15,23 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.hwang.xsighting.models.Sighting;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +44,8 @@ public class CreateSighting extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private final int MY_PERMISSIONS_REQUEST_LOCATIONS = 1122;
     private String lastLocation;
-    public Sighting sighting = new Sighting();
+    private GeoPoint geoPointLocation;
+    private static FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +55,28 @@ public class CreateSighting extends AppCompatActivity {
         // Get Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
+        // Set the username
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
     public void submitSighting(View view) {
 
-        
-
-        Map<String, Object> user = new HashMap<>();
-        user.put("author", "Alan");
-        user.put("createdTime", "Mathison");
-        user.put("description", "Turing");
-        user.put("image_url", 1912);
-        user.put("location", );
-        user.put("userId", );
+        Map<String, Object> sighting = new HashMap<>();
+        Date timestamp = new Date();
+        EditText descriptionEditText = findViewById(R.id.report_description);
+        String description = descriptionEditText.getText().toString();
+        sighting.put("author", user.getDisplayName());
+        sighting.put("createdTime", timestamp);
+        sighting.put("description", description);
+        sighting.put("image_url", "placeholder");
+        sighting.put("location", geoPointLocation);
+        sighting.put("userId", user.getUid());
 
 
 // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
+        db.collection("sighting")
+                .add(sighting)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -105,6 +117,8 @@ public class CreateSighting extends AppCompatActivity {
                                 // Set the location text
                                 TextView locationText = findViewById(R.id.report_location);
                                 locationText.setText(lastLocation);
+                                // Set the GeoPoint so location can be saved to Cloud Firestore Database
+                                geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
 
                                 Log.i("Sighting.Location", "Got a location " + lastLocation);
                             }
