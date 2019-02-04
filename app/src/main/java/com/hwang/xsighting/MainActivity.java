@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                createNewUserIfUserDoesNotExist();
+                createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
                 showName();
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Creates new user document in Firebase if current user doesn't exist
-    public void createNewUserIfUserDoesNotExist() {
+    public void createNewUserIfUserDoesNotExist(final String loggedInUserId) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+        DocumentReference docRef = db.collection("users").document(loggedInUserId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "No such document, creating user");
 
                         // Saves user to Firebase
-                        db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                        db.collection("users").document(loggedInUserId)
                                 .set(new User())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
