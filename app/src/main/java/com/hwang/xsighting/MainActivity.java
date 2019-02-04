@@ -36,16 +36,10 @@ public class MainActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 // User is signed in
-                setContentView(R.layout.activity_main);
-
-                TextView showName = findViewById(R.id.greeting);
-                showName.setText("Hello " + user.getDisplayName());
-
+                showName();
                 Log.i(TAG, user.toString());
-
             } else {
-                // No user is signed in
-                // Direct them to Login
+                // No user signed in, direct them to Login
                 Log.i(TAG, "About to launch sign in");
                 // Choose authentication providers
                 List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -59,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                               .build(),
                       RC_SIGN_IN);
 
-                Log.i(TAG, "Intent Sent");
+                Log.i(TAG, "Sign up intent Sent");
             }
     }
 
@@ -72,48 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                // Render the page with projects
-                user = FirebaseAuth.getInstance().getCurrentUser();
-
-                // Checks to see if the current user has a document in the "users" collection and creates one if not
-                final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            } else {
-                                Log.d(TAG, "No such document, creating user");
-
-                                // Saves user to Firebase
-                                db.collection("users").document(FirebaseAuth.getInstance().getUid())
-                                        .set(new User())
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error writing document", e);
-                                            }
-                                        });
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                });
-
-                setContentView(R.layout.activity_main);
-                TextView showName = findViewById(R.id.greeting);
-                showName.setText("Hello " + user.getDisplayName());
-
+                createNewUserIfUserDoesNotExist();
+                showName();
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -121,5 +75,50 @@ public class MainActivity extends AppCompatActivity {
                 // ...
             }
         }
+    }
+
+    // Creates new user document in Firebase if current user doesn't exist
+    public void createNewUserIfUserDoesNotExist() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document, creating user");
+
+                        // Saves user to Firebase
+                        db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                                .set(new User())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    // Shows the user's name
+    public void showName() {
+        setContentView(R.layout.activity_main);
+        TextView showName = findViewById(R.id.greeting);
+        showName.setText("Hello " + user.getDisplayName());
     }
 }
