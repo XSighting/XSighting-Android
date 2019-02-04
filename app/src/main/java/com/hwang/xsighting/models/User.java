@@ -17,8 +17,8 @@ public class User {
     }
 
     // Setters
-    public void setCreatedSightings() {
-
+    public void setCreatedSightings(Map<String, Boolean> createdSightings) {
+        this.createdSightings = createdSightings;
     }
 
     // Adds a sighting to createdSightings
