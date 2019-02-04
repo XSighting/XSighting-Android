@@ -32,34 +32,6 @@
         app:layout_constraintTop_toBottomOf="@+id/header_report_sighting" />
 
     <EditText
-        android:id="@+id/report_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/report_date"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_location" />
-
-    <EditText
-        android:id="@+id/report_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/report_time"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_date" />
-
-    <EditText
         android:id="@+id/report_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +43,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_time" />
+        app:layout_constraintTop_toBottomOf="@+id/report_location" />
 
     <Button
         android:id="@+id/button2"
@@ -82,4 +54,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
