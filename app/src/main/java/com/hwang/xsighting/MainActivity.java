@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 // User is signed in
                 showName();
+                Task<GetTokenResult> token = user.getIdToken(false);
                 Log.i(TAG, user.toString());
             } else {
                 // No user signed in, direct them to Login
