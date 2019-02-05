@@ -1,13 +1,16 @@
 package com.hwang.xsighting.models;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.Date;
 
 public class Sighting {
-    String userId;
-    String author;
-    Date createdTime;
-    String location;
-    Double[] latLong;
+    String authorId;
+    String authorUsername;
+    Timestamp createdTime;
+    GeoPoint locationData;
+    String locationName;
     String image_url;
     String description;
 
@@ -15,36 +18,32 @@ public class Sighting {
     public Sighting() {};
 
     // Constructor
-    public Sighting(String userId, String author, Date createdTime,
-                    String location, Double[] latLong, String image_url, String description) {
-        this.userId = userId;
-        this.author = author;
+    public Sighting(String authorId, String authorUsername, Timestamp createdTime, String locationName,
+                    GeoPoint locationData, String image_url, String description) {
+        this.authorId = authorId;
+        this.authorUsername = authorUsername;
         this.createdTime = createdTime;
-        this.location = location;
-        this.latLong = latLong;
+        this.locationData = locationData;
         this.image_url = image_url;
         this.description = description;
+        this.locationName = locationName;
     }
 
     // Getters
-    public String getUserId() {
-        return this.userId;
+    public String getAuthorId() {
+        return this.authorId;
     }
 
-    public String getAuthor() {
-        return this.author;
+    public String getAuthorUsername() {
+        return this.authorUsername;
     }
 
-    public Date getCreatedTime() {
+    public Timestamp getCreatedTime() {
         return this.createdTime;
     }
 
-    public String getLocation() {
-        return this.location;
-    }
-
-    public Double[] getLatLong() {
-        return this.latLong;
+    public GeoPoint getLocationData() {
+        return this.locationData;
     }
 
     public String getImage_url() {
@@ -55,26 +54,25 @@ public class Sighting {
         return this.description;
     }
 
+    public String getLocationName() {
+        return locationName;
+    }
+
     // Setters
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(String authorUsername) {
+        this.authorUsername = authorUsername;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setLatLong(Double lat, Double lon) {
-        Double[] newLatLong= {lat, lon};
-        this.latLong = newLatLong;
+    public void setLocation(GeoPoint location) {
+        this.locationData = locationData;
     }
 
     public void setImage_url(String image_url) {
@@ -83,5 +81,9 @@ public class Sighting {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 }
