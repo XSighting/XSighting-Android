@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/welcome_all_notification"
+            android:text="@string/welcome_all_sightings"
             android:textAlignment="center"
             android:textSize="24sp" />
     </LinearLayout>
