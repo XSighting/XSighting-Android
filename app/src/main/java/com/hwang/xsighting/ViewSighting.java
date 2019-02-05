@@ -19,8 +19,8 @@ import com.hwang.xsighting.models.Sighting;
 public class ViewSighting extends AppCompatActivity {
 
     //TODO: Check that as 'final' it does not cause issues
-    private final String sightingId = getIntent().getStringExtra("SIGHTING_ID");
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final String sightingId = getIntent().getStringExtra("SIGHTING_ID");
     private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
 
@@ -48,7 +48,7 @@ public class ViewSighting extends AppCompatActivity {
                         TextView user = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
 
-                        date.setText(sightingToDisplay.getTimestamp().toString());
+                        date.setText("Today");
                         location.setText(sightingToDisplay.getLocation());
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
