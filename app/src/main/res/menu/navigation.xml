@@ -11,9 +11,5 @@
         android:icon="@drawable/ic_ufo_icon"
         android:title="@string/title_add_sighting" />
 
-    <item
-        android:id="@+id/navigation_user_profile"
-        android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/title_user_profile" />
 
 </menu>
