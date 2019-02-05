@@ -43,11 +43,11 @@ public class ViewSighting extends AppCompatActivity {
                         // Set Text fields with the sighting
                         TextView date = findViewById(R.id.postDate);
                         TextView location = findViewById(R.id.postLocation);
-                        TextView user = findViewById(R.id.postUsername);
+                        TextView user = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
 
-                        date.setText(sightingToDisplay.getTimestamp());
-                        location.setText(sightingToDisplay.getLocation());
+                        date.setText(sightingToDisplay.getCreatedTime().toString());
+                        location.setText(sightingToDisplay.getLocationName());
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
 
