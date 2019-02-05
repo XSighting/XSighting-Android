@@ -15,7 +15,7 @@ public class Sighting {
     public Sighting() {};
 
     // Constructor
-    public Sighting(String authorUserId, String authorUsername, Date timestampe,
+    public Sighting(String authorUserId, String authorUsername, Date timestamp,
                     String location, double[] latLong, String imgUrl, String description) {
         this.authorUserId = authorUserId;
         this.authorUsername = authorUsername;

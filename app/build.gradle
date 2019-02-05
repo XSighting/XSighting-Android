@@ -28,12 +28,12 @@ dependencies {
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
-
-    // Firebase UI
-    implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    // Cloud Firestore
     implementation 'com.google.firebase:firebase-firestore:18.0.0'
-    androidTestImplementation 'androidx.test:rules:1.1.2-alpha01'
+    // Google Play - Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    // Firebase Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 }
 
 // Firebase
