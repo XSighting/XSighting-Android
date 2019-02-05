@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/header_report_sighting" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/report_description_label"
         android:layout_width="284dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
@@ -72,6 +72,6 @@
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/report_description_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

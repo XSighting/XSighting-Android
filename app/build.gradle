@@ -25,6 +25,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    // Added for Espresso testing
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
