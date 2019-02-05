@@ -38,7 +38,6 @@ import java.util.ArrayList;
 
 public class AllSightings extends AppCompatActivity {
 
-  private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
   private RecyclerView recyclerView;
   private RecyclerView.LayoutManager layoutManager;

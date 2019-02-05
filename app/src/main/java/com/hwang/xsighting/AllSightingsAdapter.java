@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.Timestamp;
+
 import com.hwang.xsighting.models.Sighting;
 
 
