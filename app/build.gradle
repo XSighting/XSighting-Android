@@ -22,18 +22,23 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'com.google.android.material:material:1.0.0-beta01'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    // Added for Espresso testing
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
-
-    // Firebase UI
-    implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    // Cloud Firestore
     implementation 'com.google.firebase:firebase-firestore:18.0.0'
-    androidTestImplementation 'androidx.test:rules:1.1.2-alpha01'
+    implementation 'com.firebaseui:firebase-ui-firestore:4.3.1'
+    // Google Play - Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    // Firebase Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 }
 
 // Firebase

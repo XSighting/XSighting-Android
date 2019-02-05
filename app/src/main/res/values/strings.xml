@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">XSighting</string>
+
+    <!--Navigation-->
+    <string name="title_user_profile">Your Profile</string>
+    <string name="title_home">Home</string>
+    <string name="title_add_sighting">Add Sighting</string>
+
+    <!-- Create Sighting Activity -->
+    <string name="button_create_sighting">Create Sighting</string>
+    <string name="button_all_sightings">All Sightings</string>
+    <string name="header_report_sighting">Report A Sighting</string>
+    <string name="report_location">Location</string>
+    <string name="report_date">Date</string>
+    <string name="report_time">Time</string>
+    <string name="report_description">Description</string>
+    <string name="report_submit">Submit Report</string>
+    <string name="report_description_long">Description of what you are reporting:</string>
+
+    <!--All Sightings-->
+    <string name="welcome_all_sightings">No Feed Available</string>
 </resources>
