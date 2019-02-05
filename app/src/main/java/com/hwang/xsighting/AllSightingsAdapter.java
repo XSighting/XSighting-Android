@@ -6,15 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.Timestamp;
 import com.hwang.xsighting.models.Sighting;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapter.ViewHolder> {
@@ -24,11 +22,15 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public View mView;
     public TextView description;
+    public TextView location;
+    public TextView timeStamp;
 
     public ViewHolder(View v) {
       super(v);
       mView = v;
       description = v.findViewById(R.id.textView_allsightings_description);
+      location = v.findViewById(R.id.textview_allsightings_location);
+      timeStamp = v.findViewById(R.id.textview_allsightings_time);
     }
   }
 
@@ -66,7 +68,16 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     // Replaces the contents of the view with the project id and title
-    holder.description.setText(sightings.get(position).getDescription());
+    Date toDate = sightings.get(position).getCreatedTime().toDate();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    String stringOfTime  = dateFormat.format(toDate);
+    holder.location.setText(sightings.get(position).getLocationName());
+    holder.timeStamp.setText(stringOfTime);
+    if (sightings.get(position).getDescription().length() > 50){
+      holder.description.setText(sightings.get(position).getDescription().substring(0, 50));
+    }else {
+      holder.description.setText(sightings.get(position).getDescription());
+    }
   }
 
   // Returns the size of projects (invoked by the layout manager)
