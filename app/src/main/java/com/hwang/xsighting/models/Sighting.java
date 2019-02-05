@@ -3,87 +3,85 @@ package com.hwang.xsighting.models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
-import java.util.Date;
-
 public class Sighting {
-    String authorId;
-    String authorUsername;
-    Timestamp createdTime;
-    GeoPoint locationData;
-    String locationName;
-    String image_url;
-    String description;
+    String mAuthorId;
+    String mAuthorUsername;
+    Timestamp mCreatedTime;
+    GeoPoint mLocationData;
+    String mLocationName;
+    String mImageUrl;
+    String mDescription;
 
     // No argument constructor
     public Sighting() {};
 
     // Constructor
-    public Sighting(String authorId, String authorUsername, Timestamp createdTime, String locationName,
-                    GeoPoint locationData, String image_url, String description) {
-        this.authorId = authorId;
-        this.authorUsername = authorUsername;
-        this.createdTime = createdTime;
-        this.locationData = locationData;
-        this.image_url = image_url;
-        this.description = description;
-        this.locationName = locationName;
+    public Sighting(String mAuthorId, String mAuthorUsername, Timestamp mCreatedTime, String mLocationName,
+                    GeoPoint mLocationData, String image_url, String mDescription) {
+        this.mAuthorId = mAuthorId;
+        this.mAuthorUsername = mAuthorUsername;
+        this.mCreatedTime = mCreatedTime;
+        this.mLocationData = mLocationData;
+        this.mImageUrl = image_url;
+        this.mDescription = mDescription;
+        this.mLocationName = mLocationName;
     }
 
     // Getters
-    public String getAuthorId() {
-        return this.authorId;
+    public String getmAuthorId() {
+        return this.mAuthorId;
     }
 
-    public String getAuthorUsername() {
-        return this.authorUsername;
+    public String getmAuthorUsername() {
+        return this.mAuthorUsername;
     }
 
-    public Timestamp getCreatedTime() {
-        return this.createdTime;
+    public Timestamp getmCreatedTime() {
+        return this.mCreatedTime;
     }
 
-    public GeoPoint getLocationData() {
-        return this.locationData;
+    public GeoPoint getmLocationData() {
+        return this.mLocationData;
     }
 
-    public String getImage_url() {
-        return this.image_url;
+    public String getmImageUrl() {
+        return this.mImageUrl;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getmDescription() {
+        return this.mDescription;
     }
 
-    public String getLocationName() {
-        return locationName;
+    public String getmLocationName() {
+        return mLocationName;
     }
 
     // Setters
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
+    public void setmAuthorId(String mAuthorId) {
+        this.mAuthorId = mAuthorId;
     }
 
     public void setAuthor(String authorUsername) {
-        this.authorUsername = authorUsername;
+        this.mAuthorUsername = authorUsername;
     }
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
+    public void setmCreatedTime(Timestamp mCreatedTime) {
+        this.mCreatedTime = mCreatedTime;
     }
 
     public void setLocation(GeoPoint location) {
-        this.locationData = locationData;
+        this.mLocationData = mLocationData;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setmImageUrl(String mImageUrl) {
+        this.mImageUrl = mImageUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setmLocationName(String mLocationName) {
+        this.mLocationName = mLocationName;
     }
 }

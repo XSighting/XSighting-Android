@@ -12,8 +12,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.hwang.xsighting.models.Sighting;
 
 
-import java.util.Map;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +24,7 @@ public class AllSightingsAdapter extends FirestoreRecyclerAdapter<Sighting, AllS
 
   @Override
   protected void onBindViewHolder(@NonNull SightingHolder holder, int position, @NonNull Sighting model) {
-    holder.textViewDescription.setText(model.getDescription());
+    holder.textViewDescription.setText(model.getmDescription());
 
   }
 
