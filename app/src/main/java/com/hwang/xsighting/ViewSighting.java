@@ -24,12 +24,10 @@ public class ViewSighting extends AppCompatActivity {
     private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sighting);
-
 
         //Get the unique sighting and render the info on the page
         DocumentReference docRef = db.collection("sighting").document(sightingId);
@@ -45,23 +43,20 @@ public class ViewSighting extends AppCompatActivity {
                         // Set Text fields with the sighting
                         TextView date = findViewById(R.id.postDate);
                         TextView location = findViewById(R.id.postLocation);
-                        TextView user = findViewById(R.id.postUser);
+                        TextView user = findViewById(R.id.postUsername);
                         TextView description = findViewById(R.id.postDescription);
 
-                        date.setText("Today");
+                        date.setText(sightingToDisplay.getTimestamp());
                         location.setText(sightingToDisplay.getLocation());
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
 
-
                     } else {
                         Log.d(TAG, "No such document");
 
-                        //TODO: Redirect to the main page with a failure toast
-
                         Context context = getApplicationContext();
                         CharSequence text = "Something went wrong! Try Again.";
-                        int duration = Toast.LENGTH_SHORT;
+                        int duration = Toast.LENGTH_LONG;
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
@@ -69,11 +64,10 @@ public class ViewSighting extends AppCompatActivity {
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
-                    //TODO: Redirect to the main page with a failure toast
 
                     Context context = getApplicationContext();
                     CharSequence text = "Something went wrong! Try Again";
-                    int duration = Toast.LENGTH_SHORT;
+                    int duration = Toast.LENGTH_LONG;
 
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -82,5 +76,4 @@ public class ViewSighting extends AppCompatActivity {
             }
         });
     }
-
 }
