@@ -3,52 +3,52 @@ package com.hwang.xsighting.models;
 import java.util.Date;
 
 public class Sighting {
-    String authorUserId;
-    String authorUsername;
-    Date timestamp;
+    String userId;
+    String author;
+    Date createdTime;
     String location;
-    double[] latLong;
-    String imgUrl;
+    Double[] latLong;
+    String image_url;
     String description;
 
     // No argument constructor
     public Sighting() {};
 
     // Constructor
-    public Sighting(String authorUserId, String authorUsername, Date timestamp,
-                    String location, double[] latLong, String imgUrl, String description) {
-        this.authorUserId = authorUserId;
-        this.authorUsername = authorUsername;
-        this.timestamp = timestamp;
+    public Sighting(String userId, String author, Date createdTime,
+                    String location, Double[] latLong, String image_url, String description) {
+        this.userId = userId;
+        this.author = author;
+        this.createdTime = createdTime;
         this.location = location;
         this.latLong = latLong;
-        this.imgUrl = imgUrl;
+        this.image_url = image_url;
         this.description = description;
     }
 
     // Getters
-    public String getAuthorUserId() {
-        return this.authorUserId;
+    public String getUserId() {
+        return this.userId;
     }
 
-    public String getAuthorUsername() {
-        return this.authorUsername;
+    public String getAuthor() {
+        return this.author;
     }
 
-    public Date getTimestamp() {
-        return this.timestamp;
+    public Date getCreatedTime() {
+        return this.createdTime;
     }
 
     public String getLocation() {
         return this.location;
     }
 
-    public double[] getLatLong() {
+    public Double[] getLatLong() {
         return this.latLong;
     }
 
-    public String getImgUrl() {
-        return this.imgUrl;
+    public String getImage_url() {
+        return this.image_url;
     }
 
     public String getDescription() {
@@ -56,29 +56,29 @@ public class Sighting {
     }
 
     // Setters
-    public void setAuthorUserId(String authorUserId) {
-        this.authorUserId = authorUserId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setAuthorUsername(String authorUsername) {
-        this.authorUsername = authorUsername;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setLatLong(double lat, double lon) {
-        double[] newLatLong= {lat, lon};
+    public void setLatLong(Double lat, Double lon) {
+        Double[] newLatLong= {lat, lon};
         this.latLong = newLatLong;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public void setDescription(String description) {

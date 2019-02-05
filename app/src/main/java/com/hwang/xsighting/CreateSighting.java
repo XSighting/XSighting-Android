@@ -27,8 +27,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.hwang.xsighting.models.Sighting;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,11 +67,13 @@ public class CreateSighting extends AppCompatActivity {
         Date timestamp = new Date();
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
+        String geoLocation = String.valueOf(geoPointLocation);
+        String time = timestamp.toString();
         sighting.put("author", user.getDisplayName());
-        sighting.put("createdTime", timestamp);
+        sighting.put("createdTime", time);
         sighting.put("description", description);
         sighting.put("image_url", "placeholder");
-        sighting.put("location", geoPointLocation);
+        sighting.put("location", geoLocation);
         sighting.put("userId", user.getUid());
 
 
@@ -117,7 +122,6 @@ public class CreateSighting extends AppCompatActivity {
                                 locationText.setText(lastLocation);
                                 // Set the GeoPoint so location can be saved to Cloud Firestore Database
                                 geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
-
                                 Log.i("Sighting.Location", "Got a location " + lastLocation);
                             }
                             else {
