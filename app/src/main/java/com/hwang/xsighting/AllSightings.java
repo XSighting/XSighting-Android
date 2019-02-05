@@ -56,7 +56,7 @@ public class AllSightings extends AppCompatActivity {
     adapter = new AllSightingsAdapter(options);
 
     RecyclerView recyclerView = findViewById(R.id.recyclerview_allsightings);
-    recyclerView.setHasFixedSize(true);
+//    recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(adapter);
 

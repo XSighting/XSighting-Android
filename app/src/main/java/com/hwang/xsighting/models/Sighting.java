@@ -28,44 +28,44 @@ public class Sighting {
     }
 
     // Getters
-    public String getmAuthorId() {
+    public String getAuthorId() {
         return this.mAuthorId;
     }
 
-    public String getmAuthorUsername() {
+    public String getAuthorUsername() {
         return this.mAuthorUsername;
     }
 
-    public Timestamp getmCreatedTime() {
+    public Timestamp getCreatedTime() {
         return this.mCreatedTime;
     }
 
-    public GeoPoint getmLocationData() {
+    public GeoPoint getLocationData() {
         return this.mLocationData;
     }
 
-    public String getmImageUrl() {
+    public String getImageUrl() {
         return this.mImageUrl;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return this.mDescription;
     }
 
-    public String getmLocationName() {
+    public String getLocationName() {
         return mLocationName;
     }
 
     // Setters
-    public void setmAuthorId(String mAuthorId) {
+    public void setAuthorId(String mAuthorId) {
         this.mAuthorId = mAuthorId;
     }
 
-    public void setAuthor(String authorUsername) {
+    public void setAuthorUsername(String authorUsername) {
         this.mAuthorUsername = authorUsername;
     }
 
-    public void setmCreatedTime(Timestamp mCreatedTime) {
+    public void setCreatedTime(Timestamp mCreatedTime) {
         this.mCreatedTime = mCreatedTime;
     }
 
@@ -73,15 +73,15 @@ public class Sighting {
         this.mLocationData = mLocationData;
     }
 
-    public void setmImageUrl(String mImageUrl) {
+    public void setImageUrl(String mImageUrl) {
         this.mImageUrl = mImageUrl;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public void setmLocationName(String mLocationName) {
+    public void setLocationName(String mLocationName) {
         this.mLocationName = mLocationName;
     }
 }

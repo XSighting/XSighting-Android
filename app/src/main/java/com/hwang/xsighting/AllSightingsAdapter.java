@@ -24,7 +24,7 @@ public class AllSightingsAdapter extends FirestoreRecyclerAdapter<Sighting, AllS
 
   @Override
   protected void onBindViewHolder(@NonNull SightingHolder holder, int position, @NonNull Sighting model) {
-    holder.textViewDescription.setText(model.getmDescription());
+    holder.textViewDescription.setText(model.getDescription());
 
   }
 
