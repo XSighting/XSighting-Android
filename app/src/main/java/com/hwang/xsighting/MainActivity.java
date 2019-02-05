@@ -18,4 +18,9 @@ public class MainActivity extends AppCompatActivity {
     Intent createSightingIntent = new Intent(this, CreateSighting.class);
     startActivity(createSightingIntent);
   }
+
+  public void goToAllSightings(View v) {
+    Intent AllSightingsIntent = new Intent(this, AllSightings.class);
+    startActivity(AllSightingsIntent);
+  }
 }

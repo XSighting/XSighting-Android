@@ -33,3 +33,6 @@ None at this time.
 
 ## The Team
 [Jessica Lovell](https://github.com/JessLovell) | [Jeff Borda](https://github.com/jeffborda) | [Derrick Hwang](https://github.com/derrickhwang21) | [Evan Slaton](https://github.com/evanslaton)
+
+## Credits/Sources
+UFO Icon - Sci Fi by Alina Oleynik from the Noun Project

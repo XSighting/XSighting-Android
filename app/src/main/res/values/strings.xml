@@ -3,4 +3,11 @@
 
     <!-- Main Activity -->
     <string name="button_create_sighting">Create Sighting</string>
+    <string name="button_all_sightings">All Sighting</string>
+    <string name="title_activity_all_sightings">AllSightings</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="welcome_all_notification">No Feed Available</string>
+    <string name="title_add_sighting">Add Sighting</string>
+    <string name="title_user_profile">User Profile</string>
 </resources>
