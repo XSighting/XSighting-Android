@@ -51,7 +51,7 @@ public class CreateSighting extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_LOCATIONS = 1122;
     private String lastLocation;
     private GeoPoint geoPointLocation;
-    private static FirebaseUser user;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ public class CreateSighting extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        // https://developer.android.com/guide/topics/ui/notifiers/toasts
                         // Toast success message
                         Context context = getApplicationContext();
                         CharSequence text = "Your sighting was saved.";

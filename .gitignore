@@ -42,6 +42,13 @@ captures/
 **/.idea/gradle.xml
 **/.idea/dictionaries
 **/.idea/libraries
+**/.idea/misc.xml
+**/.idea/runConfigurations.xml
+**/.idea/vcs.xml
+
+
+
+Collaps
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
