@@ -7,93 +7,94 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.firestore.CollectionReference;
 
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hwang.xsighting.models.Sighting;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 
 
 public class AllSightings extends AppCompatActivity {
 
   private FirebaseFirestore db = FirebaseFirestore.getInstance();
-  private CollectionReference collectionReference = db.collection("sighting");
+
+  private RecyclerView recyclerView;
+  private RecyclerView.LayoutManager layoutManager;
 
   private AllSightingsAdapter adapter;
+  private final String TAG = "AllSighting";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_all_sightings);
+    updateRecyclerView();
 
-    setUpRecyclerView();
   }
 
-  private void setUpRecyclerView() {
-    Query query = collectionReference.orderBy("description", Query.Direction.DESCENDING);
+  private void updateRecyclerView() {
+    recyclerView = (RecyclerView) findViewById(R.id.recyclerview_allsightings);
+    recyclerView.setHasFixedSize(true);
 
-    FirestoreRecyclerOptions<Sighting> options = new FirestoreRecyclerOptions.Builder<Sighting>()
-            .setQuery(query, Sighting.class)
-            .build();
+    // Creates a layout manager and assigns it to the recycler view
+    layoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(layoutManager);
 
-    adapter = new AllSightingsAdapter(options);
-
-    RecyclerView recyclerView = findViewById(R.id.recyclerview_allsightings);
-//    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    // Specifies which adapter the recycler view should use
+    adapter = new AllSightingsAdapter(new ArrayList<Sighting>());
     recyclerView.setAdapter(adapter);
 
-    new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-      @Override
-      public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        return false;
-      }
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    db.collection("sighting")
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+              @Override
+              public void onEvent(@Nullable QuerySnapshot snapshots,
+                                  @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                  Log.w(TAG, "listen:error", e);
+                  return;
+                }
 
-      @Override
-      public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        adapter.deleteItem(viewHolder.getAdapterPosition());
-      }
-    }).attachToRecyclerView(recyclerView);
+                for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                  switch (dc.getType()) {
+                    case ADDED:
+                      Log.d(TAG, "New project: " + dc.getDocument().getData());
+                      adapter.add(dc.getDocument().toObject(Sighting.class));
+                      break;
+                    case MODIFIED:
+                      Log.d(TAG, "Modified project: " + dc.getDocument().getData());
+                      //TODO: Update the project
+                      break;
+                    case REMOVED:
+                      Log.d(TAG, "Removed project: " + dc.getDocument().getData());
+                      //TODO: Remove the project
+                      break;
+                  }
+                }
 
-    adapter.setOnItemClickListener(new AllSightingsAdapter.OnItemClickListener() {
-      @Override
-      public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-        Sighting sighting = documentSnapshot.toObject(Sighting.class);
-        String id = documentSnapshot.getId();
-        String path = documentSnapshot.getReference().getPath();
-        Toast.makeText(AllSightings.this,
-                "Position: " + position + " ID: " + id, Toast.LENGTH_SHORT).show();
-      }
-    });
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    adapter.startListening();
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    adapter.stopListening();
+              }
+            });
   }
 }
