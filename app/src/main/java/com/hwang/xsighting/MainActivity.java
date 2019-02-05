@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -122,5 +123,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView showName = findViewById(R.id.greeting);
         showName.setText("Hello " + user.getDisplayName());
+    }
+
+
+
+    public void goToCreateSighting(View v) {
+        Intent goToCreateSightingIntent = new Intent(this, CreateSighting.class);
+        startActivity(goToCreateSightingIntent);
     }
 }

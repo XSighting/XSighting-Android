@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -74,19 +76,34 @@ public class CreateSighting extends AppCompatActivity {
         sighting.put("userId", user.getUid());
 
 
-// Add a new document with a generated ID
+        // Add a new document with a generated ID
         db.collection("sighting")
                 .add(sighting)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        // Toast success message
+                        Context context = getApplicationContext();
+                        CharSequence text = "Your sighting was saved.";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        // Redirect
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
+                        // Toast Failure message
+                        Context context = getApplicationContext();
+                        CharSequence text = "Something went wrong, please try again.";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
                     }
                 });
     }
@@ -116,7 +133,7 @@ public class CreateSighting extends AppCompatActivity {
                                 lastLocation = addresses.get(0).getLocality();
                                 // Set the location text
                                 TextView locationText = findViewById(R.id.report_location);
-                                locationText.setText(lastLocation);
+                                locationText.setText("Your location: " + lastLocation);
                                 // Set the GeoPoint so location can be saved to Cloud Firestore Database
                                 geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
 
