@@ -20,7 +20,7 @@ public class ViewSighting extends AppCompatActivity {
 
     //TODO: Check that as 'final' it does not cause issues
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final String sightingId = getIntent().getStringExtra("SIGHTING_ID");
+    private String sightingId;
     private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
 
@@ -28,6 +28,7 @@ public class ViewSighting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sighting);
+        sightingId = getIntent().getStringExtra("SIGHTING_ID");
 
         //Get the unique sighting and render the info on the page
         DocumentReference docRef = db.collection("sighting").document(sightingId);
@@ -50,7 +51,6 @@ public class ViewSighting extends AppCompatActivity {
                         location.setText(sightingToDisplay.getLocationName());
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
-
                     } else {
                         Log.d(TAG, "No such document");
 

@@ -7,13 +7,11 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -33,18 +31,11 @@ import com.google.firebase.firestore.GeoPoint;
 import com.hwang.xsighting.models.Sighting;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class CreateSighting extends AppCompatActivity {
-
     private final String TAG = "Create.Sighting";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FusedLocationProviderClient fusedLocationClient;
@@ -65,27 +56,12 @@ public class CreateSighting extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-
     public void submitSighting(View view) {
         Date dateData = new Date();
         Timestamp timestamp = new Timestamp(dateData);
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
         Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, lastLocation, geoPointLocation, "placeholder", description );
-//        Map<String, Object> sighting = new HashMap<>();
-//        Date timestamp = new Date();
-//        EditText descriptionEditText = findViewById(R.id.report_description);
-//        String description = descriptionEditText.getText().toString();
-
-
-//        sighting.put("authorUsername", user.getDisplayName());
-//        sighting.put("createdTime", timestamp);
-//        sighting.put("description", description);
-//        sighting.put("image_url", "placeholder");
-//        sighting.put("locationData", geoPointLocation);
-//        sighting.put("authorId", user.getUid());
-//        sighting.put("city", lastLocation);
-
 
         // Add a new document with a generated ID
         db.collection("sighting")
@@ -94,6 +70,7 @@ public class CreateSighting extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
                         // https://developer.android.com/guide/topics/ui/notifiers/toasts
                         // Toast success message
                         Context context = getApplicationContext();
@@ -101,6 +78,7 @@ public class CreateSighting extends AppCompatActivity {
                         int duration = Toast.LENGTH_LONG;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+
                         // Redirect
                         finish();
                     }
@@ -120,17 +98,17 @@ public class CreateSighting extends AppCompatActivity {
                 });
     }
 
-
-
+    // Gets user's current location
     public void getLocation() {
 
         //Permission Granted
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
                         @Override
                         public void onSuccess(Location location) {
+
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
 
@@ -143,59 +121,45 @@ public class CreateSighting extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 lastLocation = addresses.get(0).getLocality();
+
                                 // Set the location text
                                 TextView locationText = findViewById(R.id.report_location);
                                 locationText.setText("Your location: " + lastLocation);
+
                                 // Set the GeoPoint so location can be saved to Cloud Firestore Database
                                 geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
                                 Log.i("Sighting.Location", "Got a location " + lastLocation);
-                            }
-                            else {
+                            } else {
                                 lastLocation = "Unknown";
                             }
                         }
                     });
-        }
-        // Permission denied, request permission
-        else {
-
+        } else { // permission denide
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                //TODO: Customize the alert message
-
-            } else {
-                // Request the permission
+            } else { // Request the permission
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATIONS);
-
             }
         }
-
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATIONS: {
+
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                     // permission was granted, get the location
                     getLocation();
-
-                } else {
-                    // Permission denied
+                } else { // Permission denied
                     lastLocation = "Unknown";
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
-
-
 }

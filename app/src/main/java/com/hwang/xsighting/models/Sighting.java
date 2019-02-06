@@ -11,6 +11,7 @@ public class Sighting {
     String locationName;
     String imageUrl;
     String description;
+    String firebaseId;
 
     // No argument constructor
     public Sighting() {};
@@ -25,6 +26,7 @@ public class Sighting {
         this.imageUrl = image_url;
         this.description = description;
         this.locationName = locationName;
+        this.firebaseId = "";
     }
 
     // Getters
@@ -56,6 +58,8 @@ public class Sighting {
         return locationName;
     }
 
+    public String getFirebaseId() {return firebaseId;}
+
     // Setters
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
@@ -84,4 +88,6 @@ public class Sighting {
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
+
+    public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
 }

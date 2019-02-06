@@ -14,6 +14,13 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <!--http://androidsbs.blogspot.com/2013/12/androidvisibility-hide-textview.html-->
+        <TextView
+            android:id="@+id/sightingId"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility = "gone" />
+
         <TextView
             android:id="@+id/textview_allsightings_location"
             android:layout_width="match_parent"
@@ -33,10 +40,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-
-
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

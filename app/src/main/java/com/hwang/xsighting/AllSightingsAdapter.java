@@ -1,20 +1,20 @@
 package com.hwang.xsighting;
 
-
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.hwang.xsighting.models.Sighting;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 
+// http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
 public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapter.ViewHolder> {
   private List<Sighting> sightings;
 
@@ -24,6 +24,7 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     public TextView description;
     public TextView location;
     public TextView timeStamp;
+    public TextView sightingId;
 
     public ViewHolder(View v) {
       super(v);
@@ -31,6 +32,7 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
       description = v.findViewById(R.id.textView_allsightings_description);
       location = v.findViewById(R.id.textview_allsightings_location);
       timeStamp = v.findViewById(R.id.textview_allsightings_time);
+      sightingId = v.findViewById(R.id.sightingId);
     }
   }
 
@@ -41,7 +43,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
 
   // Adds a new project to projects
   // https://github.com/JessLovell/taskMaster/blob/review/app/src/main/java/com/taskmaster/taskmaster/MyAdapter.java
-  public void add(Sighting sighting) {
+  public void add(Sighting sighting, String id) {
+    sighting.setFirebaseId(id);
     sightings.add(sighting);
     notifyItemInserted(sightings.size() - 1);
   }
@@ -54,12 +57,22 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   // Create a new view (invoked by the layout manager)
   @Override
   public AllSightingsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    // create a new view
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     View v = inflater.inflate(R.layout.recyclerview_allsightings, parent, false);
 
+    // Adds an onClick listener
+    // https://stackoverflow.com/questions/13485918/android-onclick-listener-in-a-separate-class
+    v.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(final View view) {
+                TextView idView = view.findViewById(R.id.sightingId);
+                String id = idView.getText().toString();
+                Log.i("Sighting Id", id);
+                goToSighting(view, id);
+              }
+            });
 
-    // set the view's size, margins, padding and layout parameters
     ViewHolder vh = new ViewHolder(v);
     return vh;
   }
@@ -68,15 +81,19 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     // Replaces the contents of the view with the project id and title
-    Date toDate = sightings.get(position).getCreatedTime().toDate();
+    Sighting sighting = sightings.get(position);
+    Date toDate = sighting.getCreatedTime().toDate();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    String stringOfTime  = dateFormat.format(toDate);
-    holder.location.setText(sightings.get(position).getLocationName());
+    String stringOfTime = dateFormat.format(toDate);
+
+    // Injects sighting's content into the view
     holder.timeStamp.setText(stringOfTime);
-    if (sightings.get(position).getDescription().length() > 50){
-      holder.description.setText(sightings.get(position).getDescription().substring(0, 50));
-    }else {
-      holder.description.setText(sightings.get(position).getDescription());
+    holder.location.setText(sighting.getLocationName());
+    holder.sightingId.setText(sighting.getFirebaseId());
+    if (sighting.getDescription().length() > 50){
+      holder.description.setText(sighting.getDescription().substring(0, 50));
+    } else {
+      holder.description.setText(sighting.getDescription());
     }
   }
 
@@ -86,14 +103,13 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     return sightings.size();
   }
 
-  // Takes the user to the ProjectWithTasks activity
+  // Takes the user to ViewSighting
   // https://stackoverflow.com/questions/4298225/how-can-i-start-an-activity-from-a-non-activity-class
-//  public void goToProject(View v, String id, String title) {
-//    Intent goToProjectWithTasksIntent = new Intent(v.getContext(), TaskList.class);
+  public void goToSighting(View v, String id) {
+    Intent goToViewSighting = new Intent(v.getContext(), ViewSighting.class);
 
     // https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
-//    goToProjectWithTasksIntent.putExtra("PROJECT_ID", id);
-////    goToProjectWithTasksIntent.putExtra("PROJECT_TITLE", title);
-////    v.getContext().startActivity(goToProjectWithTasksIntent);
-////  }
+    goToViewSighting.putExtra("SIGHTING_ID", id);
+    v.getContext().startActivity(goToViewSighting);
+  }
 }

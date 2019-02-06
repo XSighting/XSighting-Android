@@ -32,10 +32,10 @@
         app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
         app:layout_constraintEnd_toStartOf="@+id/postLocation"
         app:layout_constraintStart_toEndOf="@+id/postedTag"
-        app:layout_constraintTop_toBottomOf="@+id/postTtle" />
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
     <TextView
-        android:id="@+id/postTtle"
+        android:id="@+id/postTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -57,7 +57,7 @@
         android:text="posted on: "
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postTtle" />
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
     <TextView
         android:id="@+id/postLocation"
@@ -72,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
         app:layout_constraintEnd_toStartOf="@+id/postUser"
         app:layout_constraintStart_toEndOf="@+id/postDate"
-        app:layout_constraintTop_toBottomOf="@+id/postTtle" />
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
     <TextView
         android:id="@+id/descriptionTag"
@@ -102,6 +102,5 @@
         app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/postLocation"
-        app:layout_constraintTop_toBottomOf="@+id/postTtle" />
-
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

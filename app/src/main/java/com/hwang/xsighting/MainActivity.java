@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -45,20 +43,21 @@ public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
   private RecyclerView.LayoutManager layoutManager;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     user = FirebaseAuth.getInstance().getCurrentUser();
     if (user != null) {
+
       // User is signed in
-//      showName();
       Task<GetTokenResult> token = user.getIdToken(false);
       Log.i(TAG, user.toString());
     } else {
+
       // No user signed in, direct them to Login
       Log.i(TAG, "About to launch sign in");
+
       // Choose authentication providers
       List<AuthUI.IdpConfig> providers = Arrays.asList(
               new AuthUI.IdpConfig.EmailBuilder().build());
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
               }
             });
-
   }
 
   @Override
@@ -103,14 +101,11 @@ public class MainActivity extends AppCompatActivity {
       IdpResponse response = IdpResponse.fromResultIntent(data);
 
       if (resultCode == RESULT_OK) {
+
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-//        showName();
       } else {
-        // Sign in failed. If response is null the user canceled the
-        // sign-in flow using the back button. Otherwise check
-        // response.getError().getErrorCode() and handle the error.
-        // ...
+        // Sign in failed
       }
     }
   }
@@ -153,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-
   /**
    * TODO render user name
    */
@@ -164,9 +158,8 @@ public class MainActivity extends AppCompatActivity {
 //    showName.setText("Hello " + user.getDisplayName());
 //  }
 
-
   private void updateRecyclerView() {
-    recyclerView = (RecyclerView) findViewById(R.id.recyclerview_allsightings);
+    recyclerView = findViewById(R.id.recyclerview_allsightings);
     recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
@@ -191,16 +184,14 @@ public class MainActivity extends AppCompatActivity {
                 for (DocumentChange dc : snapshots.getDocumentChanges()) {
                   switch (dc.getType()) {
                     case ADDED:
-                      Log.d(TAG, "New project: " + dc.getDocument().getData());
-                      adapter.add(dc.getDocument().toObject(Sighting.class));
+                      Log.d(TAG, "New sighting: " + dc.getDocument().getData());
+                      adapter.add(dc.getDocument().toObject(Sighting.class), dc.getDocument().getId());
                       break;
                     case MODIFIED:
-                      Log.d(TAG, "Modified project: " + dc.getDocument().getData());
-                      //TODO: Update the project
+                      Log.d(TAG, "Modified sighting: " + dc.getDocument().getData());
                       break;
                     case REMOVED:
-                      Log.d(TAG, "Removed project: " + dc.getDocument().getData());
-                      //TODO: Remove the project
+                      Log.d(TAG, "Removed sighting: " + dc.getDocument().getData());
                       break;
                   }
                 }
