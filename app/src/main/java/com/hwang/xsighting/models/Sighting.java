@@ -3,13 +3,16 @@ package com.hwang.xsighting.models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sighting {
     String authorId;
     String authorUsername;
     Timestamp createdTime;
     GeoPoint locationData;
     String locationName;
-    String imageUrl;
+    List<String> imageUrls;
     String description;
     String firebaseId;
 
@@ -18,12 +21,12 @@ public class Sighting {
 
     // Constructor
     public Sighting(String authorId, String authorUsername, Timestamp createdTime, String locationName,
-                    GeoPoint locationData, String image_url, String description) {
+                    GeoPoint locationData, String description) {
         this.authorId = authorId;
         this.authorUsername = authorUsername;
         this.createdTime = createdTime;
         this.locationData = locationData;
-        this.imageUrl = image_url;
+        this.imageUrls = new ArrayList<>();
         this.description = description;
         this.locationName = locationName;
         this.firebaseId = "";
@@ -46,8 +49,8 @@ public class Sighting {
         return this.locationData;
     }
 
-    public String getImageUrl() {
-        return this.imageUrl;
+    public List<String> getImageUrls() {
+        return this.imageUrls;
     }
 
     public String getDescription() {
@@ -77,8 +80,8 @@ public class Sighting {
         this.locationData = locationData;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public void setDescription(String description) {
@@ -90,4 +93,9 @@ public class Sighting {
     }
 
     public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
+
+    // Adds an image url to imageUrls
+    public void addImageUrl(String imageUrl) {
+        this.imageUrls.add(imageUrl);
+    }
 }
