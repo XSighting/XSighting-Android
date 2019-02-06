@@ -72,8 +72,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     String stringOfTime  = dateFormat.format(toDate);
     holder.location.setText(sightings.get(position).getLocationName());
     holder.timeStamp.setText(stringOfTime);
-    if (sightings.get(position).getDescription().length() > 50){
-      holder.description.setText(sightings.get(position).getDescription().substring(0, 50));
+    if (sightings.get(position).getDescription().length() > 150){
+      holder.description.setText(sightings.get(position).getDescription().substring(0, 150));
     }else {
       holder.description.setText(sightings.get(position).getDescription());
     }
