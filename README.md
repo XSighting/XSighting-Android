@@ -37,3 +37,5 @@ None at this time.
 ## Credits/Sources
 UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
 [firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
+[Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
+[Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)

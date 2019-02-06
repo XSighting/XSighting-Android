@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_add_sighting"
-        android:icon="@drawable/ic_ufo_icon"
+        android:icon="@drawable/ic_ufo_flying"
         android:title="@string/title_add_sighting" />
 
 

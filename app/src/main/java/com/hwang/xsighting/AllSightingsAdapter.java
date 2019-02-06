@@ -58,7 +58,6 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     View v = inflater.inflate(R.layout.recyclerview_allsightings, parent, false);
 
-
     // set the view's size, margins, padding and layout parameters
     ViewHolder vh = new ViewHolder(v);
     return vh;
@@ -69,7 +68,7 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   public void onBindViewHolder(ViewHolder holder, int position) {
     // Replaces the contents of the view with the project id and title
     Date toDate = sightings.get(position).getCreatedTime().toDate();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
     String stringOfTime  = dateFormat.format(toDate);
     holder.location.setText(sightings.get(position).getLocationName());
     holder.timeStamp.setText(stringOfTime);
