@@ -35,6 +35,8 @@ None at this time.
 [Jessica Lovell](https://github.com/JessLovell) | [Jeff Borda](https://github.com/jeffborda) | [Derrick Hwang](https://github.com/derrickhwang21) | [Evan Slaton](https://github.com/evanslaton)
 
 ## Credits/Sources
-* UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
-* [firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
-* [image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
+UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
+[firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
+[Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
+[Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
+[image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
