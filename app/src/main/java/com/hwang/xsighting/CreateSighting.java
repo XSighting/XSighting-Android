@@ -61,7 +61,7 @@ public class CreateSighting extends AppCompatActivity {
         Timestamp timestamp = new Timestamp(dateData);
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
-        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, lastLocation, geoPointLocation, "placeholder", description );
+        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, lastLocation, geoPointLocation, description);
 
         // Add a new document with a generated ID
         db.collection("sighting")
