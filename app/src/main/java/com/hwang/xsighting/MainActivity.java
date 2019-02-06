@@ -147,17 +147,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-
-  /**
-   * TODO render user name
-   */
-  // Shows the user's name
-//  public void showName() {
-//    setContentView(R.layout.activity_main);
-//    TextView showName = findViewById(R.id.greeting);
-//    showName.setText("Hello " + user.getDisplayName());
-//  }
-
+  
   private void updateRecyclerView() {
     recyclerView = findViewById(R.id.recyclerview_allsightings);
     recyclerView.setHasFixedSize(true);
