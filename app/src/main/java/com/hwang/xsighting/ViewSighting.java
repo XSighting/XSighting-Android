@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +37,35 @@ public class ViewSighting extends AppCompatActivity {
         setContentView(R.layout.activity_view_sighting);
         sightingId = getIntent().getStringExtra("SIGHTING_ID");
 
+
+        getContent();
+        setNavigation();
+
+    }
+
+    public void setNavigation(){
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                Intent homeIntent = new Intent(ViewSighting.this, MainActivity.class);
+                                startActivity(homeIntent);
+                            case R.id.navigation_add_sighting:
+                                Intent addSighting = new Intent(ViewSighting.this, CreateSighting.class);
+                                startActivity(addSighting);
+                        }
+                        return true;
+                    }
+                });
+    }
+
+    public void getContent() {
         //Get the unique sighting and render the info on the page
         DocumentReference docRef = db.collection("sighting").document(sightingId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

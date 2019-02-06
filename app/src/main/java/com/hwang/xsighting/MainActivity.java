@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
       // User is signed in
       Task<GetTokenResult> token = user.getIdToken(false);
+
+      setNavigation();
       Log.i(TAG, user.toString());
     } else {
 
@@ -73,26 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
       Log.i(TAG, "Sign up intent Sent");
     }
-    setContentView(R.layout.activity_main);
-    BottomNavigationView bottomNavigationView = (BottomNavigationView)
-            findViewById(R.id.navigation);
-    bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-    updateRecyclerView();
-    bottomNavigationView.setOnNavigationItemSelectedListener(
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-              @Override
-              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                  case R.id.navigation_home:
-                      Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-                      startActivity(homeIntent);
-                  case R.id.navigation_add_sighting:
-                    Intent addSighting = new Intent(MainActivity.this, CreateSighting.class);
-                    startActivity(addSighting);
-                }
-                return true;
-              }
-            });
   }
 
   @Override
@@ -107,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
         updateRecyclerView();
+        setNavigation();
 
       } else {
         // Sign in failed
@@ -192,6 +175,30 @@ public class MainActivity extends AppCompatActivity {
                   }
                 }
 
+              }
+            });
+  }
+
+  public void setNavigation(){
+
+    setContentView(R.layout.activity_main);
+    BottomNavigationView bottomNavigationView = (BottomNavigationView)
+            findViewById(R.id.navigation);
+    bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+    updateRecyclerView();
+    bottomNavigationView.setOnNavigationItemSelectedListener(
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+              @Override
+              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                  case R.id.navigation_home:
+                    Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(homeIntent);
+                  case R.id.navigation_add_sighting:
+                    Intent addSighting = new Intent(MainActivity.this, CreateSighting.class);
+                    startActivity(addSighting);
+                }
+                return true;
               }
             });
   }

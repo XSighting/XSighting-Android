@@ -33,7 +33,6 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
       location = v.findViewById(R.id.textview_allsightings_location);
       timeStamp = v.findViewById(R.id.textview_allsightings_time);
       sightingId = v.findViewById(R.id.sightingId);
-
     }
   }
 
@@ -87,12 +86,12 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
     String stringOfTime = dateFormat.format(toDate);
 
-    // Injects sighting's content into the view
+//     Injects sighting's content into the view
     holder.timeStamp.setText(stringOfTime);
     holder.location.setText(sighting.getLocationName());
     holder.sightingId.setText(sighting.getFirebaseId());
-    if (sighting.getDescription().length() > 50){
-      holder.description.setText(sighting.getDescription().substring(0, 50));
+    if (sighting.getDescription().length() > 60){
+      holder.description.setText(sighting.getDescription().substring(0, 60) + "...");
     } else {
       holder.description.setText(sighting.getDescription());
     }

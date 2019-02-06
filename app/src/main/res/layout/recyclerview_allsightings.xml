@@ -8,6 +8,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     app:cardBackgroundColor="@color/colorPrimary">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,30 +19,55 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility = "gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textview_allsightings_location"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
                 android:fontFamily="@font/xfont"
-                android:textAlignment="center"
+                android:text="Title"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                android:textSize="18dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/textview_allsightings_time"
-                android:layout_width="match_parent"
-                android:layout_height="18dp"
-                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
                 android:fontFamily="@font/xfont"
+                android:text="Date"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView_allsightings_description"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:paddingTop="8dp"
-            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/xfont"
+            android:text="Description"
+            android:textAlignment="textStart"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>
