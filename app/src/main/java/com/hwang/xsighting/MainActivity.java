@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hwang.xsighting.models.Sighting;
 import com.hwang.xsighting.models.User;
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    db.collection("sighting")
+    db.collection("sighting").orderBy("createdTime", Query.Direction.ASCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
               @Override
               public void onEvent(@Nullable QuerySnapshot snapshots,

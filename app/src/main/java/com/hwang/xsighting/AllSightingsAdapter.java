@@ -45,8 +45,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   // https://github.com/JessLovell/taskMaster/blob/review/app/src/main/java/com/taskmaster/taskmaster/MyAdapter.java
   public void add(Sighting sighting, String id) {
     sighting.setFirebaseId(id);
-    sightings.add(sighting);
-    notifyItemInserted(sightings.size() - 1);
+    sightings.add(0, sighting);
+    notifyItemInserted(0);
   }
 
   public void setSightings(List<Sighting> sightings) {
