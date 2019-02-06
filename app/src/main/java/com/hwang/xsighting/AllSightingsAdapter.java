@@ -83,7 +83,7 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     // Replaces the contents of the view with the project id and title
     Sighting sighting = sightings.get(position);
     Date toDate = sighting.getCreatedTime().toDate();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
     String stringOfTime = dateFormat.format(toDate);
 
     // Injects sighting's content into the view
