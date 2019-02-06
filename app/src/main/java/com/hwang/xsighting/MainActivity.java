@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
+        updateRecyclerView();
+
       } else {
         // Sign in failed
       }
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
   // Creates new user document in Firebase if current user doesn't exist
   public void createNewUserIfUserDoesNotExist(final String loggedInUserId) {
+
     user = FirebaseAuth.getInstance().getCurrentUser();
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference docRef = db.collection("users").document(loggedInUserId);
@@ -149,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
   }
   
   private void updateRecyclerView() {
+
     recyclerView = findViewById(R.id.recyclerview_allsightings);
     recyclerView.setHasFixedSize(true);
 

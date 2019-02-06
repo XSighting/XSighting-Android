@@ -16,6 +16,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hwang.xsighting.models.Sighting;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ViewSighting extends AppCompatActivity {
 
     //TODO: Check that as 'final' it does not cause issues
@@ -47,7 +50,12 @@ public class ViewSighting extends AppCompatActivity {
                         TextView user = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
 
-                        date.setText(sightingToDisplay.getCreatedTime().toString());
+                        // Make the Date String Pretty
+                        Date toDate = sightingToDisplay.getCreatedTime().toDate();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
+                        String stringOfTime = dateFormat.format(toDate);
+
+                        date.setText(stringOfTime);
                         location.setText(sightingToDisplay.getLocationName());
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
