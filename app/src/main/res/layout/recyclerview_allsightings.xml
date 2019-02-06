@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/sightingId"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility = "gone" />
             <TextView
                 android:id="@+id/textview_allsightings_location"
                 android:layout_width="match_parent"
