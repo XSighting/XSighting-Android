@@ -23,6 +23,4 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_gravity="bottom"
         app:menu="@menu/navigation" />
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
