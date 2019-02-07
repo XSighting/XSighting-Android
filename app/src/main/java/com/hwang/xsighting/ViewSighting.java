@@ -78,23 +78,21 @@ public class ViewSighting extends AppCompatActivity {
                         sightingToDisplay = document.toObject(Sighting.class);
 
                         // Set Text fields with the sighting
-//                        TextView date = findViewById(R.id.postDate);
-//                        TextView location = findViewById(R.id.postLocation);
+                        TextView date = findViewById(R.id.postDate);
                         TextView user = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
 
                         // Make the Date String Pretty
                         Date toDate = sightingToDisplay.getCreatedTime().toDate();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy @ HH:mm");
                         String stringOfTime = dateFormat.format(toDate);
 
-                        //TODO: fix this date format?
-//                        date.setText(stringOfTime);
-//                        location.setText(sightingToDisplay.getLocationName());
-                        user.setText(sightingToDisplay.getAuthorUsername() );
+                        user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
-                        title.setText("Sighted in " +sightingToDisplay.getLocationName());
+                        title.setText("Sighted in " + sightingToDisplay.getLocationName());
+                        date.setText(stringOfTime);
+
                     } else {
                         Log.d(TAG, "No such document");
 
