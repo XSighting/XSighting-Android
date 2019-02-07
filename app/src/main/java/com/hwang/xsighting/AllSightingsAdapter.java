@@ -33,7 +33,6 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
       location = v.findViewById(R.id.textview_allsightings_location);
       timeStamp = v.findViewById(R.id.textview_allsightings_time);
       sightingId = v.findViewById(R.id.sightingId);
-
     }
   }
 
