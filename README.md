@@ -36,7 +36,19 @@ None at this time.
 
 ## Credits/Sources
 UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
-[firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
+[Firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
 [Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
 [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
-[image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
+Images:
+* [Image upload and camera permissions](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
+* [Getting images from user's gallery](https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery)
+* [Getting image file names/paths](https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore)
+* [Inspired by NJCrain](https://github.com/NJCrain/health-tracker/blob/master/app/src/main/java/com/njcrain/android/healthtracker/activity/ProfileActivity.java)
+* [Android docs - camera basic](https://developer.android.com/training/camera/photobasics)
+* [Android docs - requesting permissions](https://developer.android.com/training/permissions/requesting)
+* [Firebase upload files](https://firebase.google.com/docs/storage/android/upload-files)
+* [Firebase download files](https://firebase.google.com/docs/storage/android/download-files)
+* Glide:
+  * [Glide docs](http://bumptech.github.io/glide/doc/download-setup.html)
+  * [Glide GitHub](https://github.com/bumptech/glide)
+  * [Firebase UI Storage with Glide](https://github.com/firebase/FirebaseUI-Android/blob/master/storage/README.md)

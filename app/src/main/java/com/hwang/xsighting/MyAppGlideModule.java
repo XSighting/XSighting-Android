@@ -14,6 +14,8 @@ import java.io.InputStream;
 // http://bumptech.github.io/glide/doc/generatedapi.html
 @GlideModule
 public final class MyAppGlideModule extends AppGlideModule {
+
+    // https://github.com/firebase/FirebaseUI-Android/blob/master/storage/README.md
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         // Register FirebaseImageLoader to handle StorageReference

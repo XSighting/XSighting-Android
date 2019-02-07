@@ -124,6 +124,7 @@ public class ViewSighting extends AppCompatActivity {
     }
 
     // Gets the sighting's image from FireBase (if there is an image to retrieve)
+    // https://firebase.google.com/docs/storage/android/download-files
     public void getImageFromFireBase() {
         if (sightingToDisplay.getImageUrl() != null) {
             // Create a storage reference from our app
