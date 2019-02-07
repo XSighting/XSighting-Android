@@ -85,11 +85,20 @@ public class CreateSighting extends AppCompatActivity {
 
         // Get Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        Log.i("LOCATION", "CALLING GET LOCATION");
         getLocation();
 
         // Set the username
         user = FirebaseAuth.getInstance().getCurrentUser();
         setNavigation();
+    }
+    @Override
+    protected  void onRestart(){
+        super.onRestart();
+
+        Log.i("LOCATION", "CALLING GET LOCATION in RESTART");
+        getLocation();
+
     }
 
     public void submitSighting(View view) {

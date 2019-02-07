@@ -10,14 +10,14 @@
         android:id="@+id/banner_title_all_sightings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="monospace"
+        android:focusable="true"
+        android:fontFamily="@font/xfont"
         android:text="@string/all_sighting_title"
-        android:textColor="@color/colorAccent"
         android:textAlignment="center"
+        android:textColor="@color/colorAccent"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerview_allsightings"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,22 +25,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_allsightings"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:elevation="2dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/navigation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_title_all_sightings"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_allsightings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner_title_all_sightings" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
   private void updateRecyclerView() {
 
     recyclerView = findViewById(R.id.recyclerview_allsightings);
-//    recyclerView.setHasFixedSize(true);
+    recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
     layoutManager = new LinearLayoutManager(this);
