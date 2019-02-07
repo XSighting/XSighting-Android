@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.hwang.xsighting.models.Sighting;
 import com.hwang.xsighting.models.User;
 
@@ -44,11 +47,12 @@ public class MainActivity extends AppCompatActivity {
   private AllSightingsAdapter adapter;
   private RecyclerView recyclerView;
   private RecyclerView.LayoutManager layoutManager;
+  private String deviceToken;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
+
     user = FirebaseAuth.getInstance().getCurrentUser();
     if (user != null) {
 
@@ -117,16 +121,22 @@ public class MainActivity extends AppCompatActivity {
           DocumentSnapshot document = task.getResult();
           if (document.exists()) {
             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+            // Update their device token for notifications
+            setDeviceToken();
           } else {
             Log.d(TAG, "No such document, creating user");
 
             // Saves user to Firebase
             db.collection("users").document(loggedInUserId)
-                    .set(new User())
+                    // Save user with DeviceToken
+                    .set(new User(deviceToken))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                       @Override
                       public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
+
+                        // Update their device token for notifications
+                        setDeviceToken();
                       }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
   private void updateRecyclerView() {
 
     recyclerView = findViewById(R.id.recyclerview_allsightings);
-    recyclerView.setHasFixedSize(true);
+//    recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
     layoutManager = new LinearLayoutManager(this);
@@ -214,4 +224,47 @@ public class MainActivity extends AppCompatActivity {
               }
             });
   }
+
+  public void setDeviceToken() {
+    FirebaseInstanceId.getInstance().getInstanceId()
+            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+              @Override
+              public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                  Log.w(TAG, "getInstanceId failed", task.getException());
+                  return;
+                }
+
+                // Get new Instance ID token
+                deviceToken = task.getResult().getToken();
+                updateDeviceTokenInDatabase();
+
+                // Log and toast
+                Log.d(TAG, deviceToken);
+              }
+            });
+
+
+  }
+
+  private void updateDeviceTokenInDatabase() {
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference docRef = db.collection("users").document(user.getUid());
+    docRef
+            .update("deviceToken", deviceToken)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+              @Override
+              public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Update deviceToken");
+              }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+              @Override
+              public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error updating deviceToken", e);
+              }
+            });
+
+  }
+
 }
