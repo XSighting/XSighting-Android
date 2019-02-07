@@ -97,7 +97,8 @@ public class CreateSighting extends AppCompatActivity {
         Timestamp timestamp = new Timestamp(dateData);
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
-        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, currentPhotoPath, description);
+        final String imageUrl = currentPhotoPath != null ? currentPhotoPath.replace("/", "") : null;
+        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, imageUrl, description);
 
         // Add a new document with a generated ID
         db.collection("sighting")
@@ -107,8 +108,7 @@ public class CreateSighting extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
-
-                        savePictureToFireBase();
+                        savePictureToFireBase(imageUrl); // Saves picture to FireBase
 
                         // https://developer.android.com/guide/topics/ui/notifiers/toasts
                         // Toast success message
@@ -137,16 +137,17 @@ public class CreateSighting extends AppCompatActivity {
                 });
     }
 
-    // Save the picture to the FireBase
-    public void savePictureToFireBase() {
-        if (currentPhotoPath != null) {
+    // Saves the picture to the FireBase if
+    // https://firebase.google.com/docs/storage/android/upload-files
+    public void savePictureToFireBase(String imageUrl) {
+        if (currentPhotoPath != null) { // Doesn't save anything if the user did not take a picture
 
             // Create a storage reference from our app
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
 
             // Create a child reference, imagesRef now points to "images"
-            StorageReference imagesRef = storageRef.child("images");
+            StorageReference imagesRef = storageRef.child(imageUrl);
 
             // Get the data from an ImageView as bytes
             sightingImage.setDrawingCacheEnabled(true);
@@ -160,13 +161,12 @@ public class CreateSighting extends AppCompatActivity {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
+                    // DO NOTHING
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
+                    // DO NOTHING
                 }
             });
         }
