@@ -43,9 +43,6 @@ dependencies {
     // Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
-    // Firebase Job Dispatcher
-    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
-
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
