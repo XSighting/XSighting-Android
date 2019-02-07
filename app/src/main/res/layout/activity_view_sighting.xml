@@ -17,6 +17,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/xfont"
         android:text="@string/detail_title"
+        android:textColor="@color/colorAccent"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,11 +55,11 @@
                     android:id="@+id/userTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="4dp"
+                    android:focusable="true"
                     android:fontFamily="@font/xfont"
                     android:text="@string/detail_user_tag"
                     android:textAlignment="center"
@@ -68,16 +69,15 @@
                     android:id="@+id/postUser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="monospace"
-                    android:text="@string/detail_username"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="4dp"
-                    />
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/detail_username"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -90,11 +90,11 @@
                     android:id="@+id/textView_detail_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="4dp"
+                    android:focusable="true"
                     android:fontFamily="@font/xfont"
                     android:text="@string/detail_time"
                     android:textSize="18sp" />
@@ -117,28 +117,38 @@
                 android:id="@+id/descriptionTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:fontFamily="@font/xfont"
-                android:text="@string/detail_description"
-                android:textSize="18sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
-                />
+                android:focusable="true"
+                android:fontFamily="@font/xfont"
+                android:text="@string/detail_description"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/postDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="@string/detail_default"
-                android:textSize="16sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                />
+                android:fontFamily="monospace"
+                android:text="@string/detail_default"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/delete_sighting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="monospace"
+                android:onClick="onDeleteButtonClicked"
+                android:text="Delete this sighting" />
 
         </LinearLayout>
     </ScrollView>
