@@ -41,3 +41,4 @@ UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
 [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
 [image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
 [Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
+[Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)

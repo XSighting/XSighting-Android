@@ -54,11 +54,15 @@ public class ViewSighting extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                Intent homeIntent = new Intent(ViewSighting.this, MainActivity.class);
+                                Intent homeIntent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(homeIntent);
+                                overridePendingTransition(0, 0);
+                                break;
                             case R.id.navigation_add_sighting:
-                                Intent addSighting = new Intent(ViewSighting.this, CreateSighting.class);
+                                Intent addSighting = new Intent(getBaseContext(), CreateSighting.class);
                                 startActivity(addSighting);
+                                overridePendingTransition(0, 0);
+                                break;
                         }
                         return true;
                     }
