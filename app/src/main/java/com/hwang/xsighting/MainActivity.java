@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-//        updateRecyclerView();
+        updateRecyclerView();
         setNavigation();
 
       } else {
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView = (BottomNavigationView)
             findViewById(R.id.navigation);
     bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-//    updateRecyclerView();
+    updateRecyclerView();
     bottomNavigationView.setOnNavigationItemSelectedListener(
             new BottomNavigationView.OnNavigationItemSelectedListener() {
               @Override
@@ -240,9 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 updateDeviceTokenInDatabase();
 
                 // Log and toast
-                String msg = getString(R.string.msg_token_fmt, deviceToken);
-                Log.d(TAG, msg);
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                Log.d(TAG, deviceToken);
               }
             });
 
