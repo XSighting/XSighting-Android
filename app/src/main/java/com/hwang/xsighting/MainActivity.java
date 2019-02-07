@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.hwang.xsighting.models.Sighting;
 import com.hwang.xsighting.models.User;
 
@@ -44,9 +47,29 @@ public class MainActivity extends AppCompatActivity {
   private AllSightingsAdapter adapter;
   private RecyclerView recyclerView;
   private RecyclerView.LayoutManager layoutManager;
+  private String deviceToken;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+
+    FirebaseInstanceId.getInstance().getInstanceId()
+            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+              @Override
+              public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                  Log.w(TAG, "getInstanceId failed", task.getException());
+                  return;
+                }
+
+                // Get new Instance ID token
+                deviceToken = task.getResult().getToken();
+
+                // Log and toast
+                String msg = getString(R.string.msg_token_fmt, deviceToken);
+                Log.d(TAG, msg);
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+              }
+            });
 
     super.onCreate(savedInstanceState);
     user = FirebaseAuth.getInstance().getCurrentUser();
@@ -116,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
             // Saves user to Firebase
             db.collection("users").document(loggedInUserId)
-                    .set(new User())
+                    // Save user with DeviceToken
+                    .set(new User(deviceToken))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                       @Override
                       public void onSuccess(Void aVoid) {

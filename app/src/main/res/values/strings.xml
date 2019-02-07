@@ -19,4 +19,9 @@
 
     <!--All Sightings-->
     <string name="welcome_all_sightings">No Feed Available</string>
+
+    <!-- Notifications -->
+    <string name="msg_token_fmt" translatable="false">Token: InstanceID Token: %s</string>
+    <string name="default_notification_channel_id">default_notification_channel</string>
+    <string name="fcm_message">New Sighting Nearby</string>
 </resources>
