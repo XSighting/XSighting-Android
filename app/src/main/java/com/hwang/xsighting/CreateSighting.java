@@ -5,14 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -24,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +32,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,6 +89,7 @@ public class CreateSighting extends AppCompatActivity {
 
         // Set the username
         user = FirebaseAuth.getInstance().getCurrentUser();
+        setNavigation();
     }
 
     public void submitSighting(View view) {
@@ -96,7 +97,8 @@ public class CreateSighting extends AppCompatActivity {
         Timestamp timestamp = new Timestamp(dateData);
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
-        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, currentPhotoPath, description);
+        final String imageUrl = currentPhotoPath != null ? currentPhotoPath.replace("/", "") : null;
+        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, imageUrl, description);
 
         // Add a new document with a generated ID
         db.collection("sighting")
@@ -106,8 +108,7 @@ public class CreateSighting extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
-
-                        savePictureToFireBase();
+                        savePictureToFireBase(imageUrl); // Saves picture to FireBase
 
                         // https://developer.android.com/guide/topics/ui/notifiers/toasts
                         // Toast success message
@@ -136,16 +137,17 @@ public class CreateSighting extends AppCompatActivity {
                 });
     }
 
-    // Save the picture to the FireBase
-    public void savePictureToFireBase() {
-        if (currentPhotoPath != null) {
+    // Saves the picture to the FireBase if
+    // https://firebase.google.com/docs/storage/android/upload-files
+    public void savePictureToFireBase(String imageUrl) {
+        if (currentPhotoPath != null) { // Doesn't save anything if the user did not take a picture
 
             // Create a storage reference from our app
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
 
             // Create a child reference, imagesRef now points to "images"
-            StorageReference imagesRef = storageRef.child("images");
+            StorageReference imagesRef = storageRef.child(imageUrl);
 
             // Get the data from an ImageView as bytes
             sightingImage.setDrawingCacheEnabled(true);
@@ -159,13 +161,12 @@ public class CreateSighting extends AppCompatActivity {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
+                    // DO NOTHING
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
+                    // DO NOTHING
                 }
             });
         }
@@ -368,5 +369,27 @@ public class CreateSighting extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void setNavigation(){
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                Intent homeIntent = new Intent(CreateSighting.this, MainActivity.class);
+                                startActivity(homeIntent);
+                            case R.id.navigation_add_sighting:
+                                Intent addSighting = new Intent(CreateSighting.this, CreateSighting.class);
+                                startActivity(addSighting);
+                        }
+                        return true;
+                    }
+                });
     }
 }
