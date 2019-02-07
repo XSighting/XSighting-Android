@@ -79,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onRestart() {
+    super.onRestart();
+    updateRecyclerView();
+  }
+
+  @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
@@ -140,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
   private void updateRecyclerView() {
 
     recyclerView = findViewById(R.id.recyclerview_allsightings);
-//    recyclerView.setHasFixedSize(true);
+    recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
     layoutManager = new LinearLayoutManager(this);
@@ -172,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                       break;
                     case REMOVED:
                       Log.d(TAG, "Removed sighting: " + dc.getDocument().getData());
+                      adapter.remove(dc.getDocument().toObject(Sighting.class));
                       break;
                   }
                 }

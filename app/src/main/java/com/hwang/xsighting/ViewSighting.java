@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,18 +32,20 @@ import java.util.Date;
 
 public class ViewSighting extends AppCompatActivity {
 
-    //TODO: Check that as 'final' it does not cause issues
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String sightingId;
     private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
+    private FirebaseUser user;
     private ImageView sightingImageDetailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sighting);
+
         sightingId = getIntent().getStringExtra("SIGHTING_ID");
+        user = FirebaseAuth.getInstance().getCurrentUser();
         sightingImageDetailView = findViewById(R.id.sightingImageDetailView);
 
         getContent();
@@ -84,9 +90,19 @@ public class ViewSighting extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         sightingToDisplay = document.toObject(Sighting.class);
 
+                        // check to see if the logged in user created the post
+                        Button deleteButton = findViewById(R.id.delete_sighting);
+
+                        if (user.getUid().equals(sightingToDisplay.getAuthorId())) {
+                            // Allow creator to delete the post
+                            deleteButton.setVisibility(View.VISIBLE);
+                        } else {
+                            deleteButton.setVisibility(View.INVISIBLE);
+                        }
+
                         // Set Text fields with the sighting
                         TextView date = findViewById(R.id.postDate);
-                        TextView user = findViewById(R.id.postUser);
+                        TextView userName = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
                         getImageFromFireBase();
@@ -96,7 +112,7 @@ public class ViewSighting extends AppCompatActivity {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy @ HH:mm");
                         String stringOfTime = dateFormat.format(toDate);
 
-                        user.setText(sightingToDisplay.getAuthorUsername());
+                        userName.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
                         title.setText("Sighted in " + sightingToDisplay.getLocationName());
                         date.setText(stringOfTime);
@@ -148,5 +164,21 @@ public class ViewSighting extends AppCompatActivity {
                     .load(pathReference)
                     .into(imageView);
         }
+    }
+
+    public void onDeleteButtonClicked(View v){
+
+        db.collection("sighting").document(sightingId).delete();
+
+        // Notify the user that delete was successful
+        Context context = getApplicationContext();
+        CharSequence text = "Sighting was deleted";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        // Redirect to Main Activity
+        finish();
     }
 }
