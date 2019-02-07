@@ -90,8 +90,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     holder.timeStamp.setText(stringOfTime);
     holder.location.setText(sighting.getLocationName());
     holder.sightingId.setText(sighting.getFirebaseId());
-    if (sighting.getDescription().length() > 50){
-      holder.description.setText(sighting.getDescription().substring(0, 50));
+    if (sighting.getDescription().length() > 150){
+      holder.description.setText(sighting.getDescription().substring(0, 150));
     } else {
       holder.description.setText(sighting.getDescription());
     }
