@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/xfont"
         android:text="Recent Sightings"
         android:textAlignment="center"
         android:textSize="24sp"

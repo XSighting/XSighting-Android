@@ -200,7 +200,7 @@ public class CreateSighting extends AppCompatActivity {
 
                                 // Set the location text
                                 TextView locationText = findViewById(R.id.report_location);
-                                locationText.setText("Your location: " + lastLocation);
+                                locationText.setText(lastLocation);
 
                                 // Set the GeoPoint so location can be saved to Cloud Firestore Database
                                 geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
