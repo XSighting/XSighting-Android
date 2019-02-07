@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                       break;
                     case REMOVED:
                       Log.d(TAG, "Removed sighting: " + dc.getDocument().getData());
+                      adapter.remove(dc.getDocument().toObject(Sighting.class));
                       break;
                   }
                 }

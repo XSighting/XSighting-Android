@@ -149,7 +149,7 @@ public class ViewSighting extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        // Redirect to Main Activvity
+        // Redirect to Main Activity
         finish();
     }
 }
