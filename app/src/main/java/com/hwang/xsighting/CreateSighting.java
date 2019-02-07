@@ -172,8 +172,6 @@ public class CreateSighting extends AppCompatActivity {
         }
     }
 
-
-
     // Gets user's current location
     public void getLocation() {
 
@@ -371,8 +369,8 @@ public class CreateSighting extends AppCompatActivity {
         }
     }
 
+    // Adds bottom navigation
     public void setNavigation(){
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
