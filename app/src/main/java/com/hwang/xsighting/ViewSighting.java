@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.hwang.xsighting.models.Sighting;
 
 import java.text.SimpleDateFormat;
@@ -30,10 +33,11 @@ import java.util.Date;
 public class ViewSighting extends AppCompatActivity {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final String TAG = "SightingDetail";
     private String sightingId;
+    private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
     private FirebaseUser user;
+    private ImageView sightingImageDetailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class ViewSighting extends AppCompatActivity {
 
         sightingId = getIntent().getStringExtra("SIGHTING_ID");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        sightingImageDetailView = findViewById(R.id.sightingImageDetailView);
 
         getContent();
         setNavigation();
@@ -100,6 +105,7 @@ public class ViewSighting extends AppCompatActivity {
                         TextView userName = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
+                        getImageFromFireBase();
 
                         // Make the Date String Pretty
                         Date toDate = sightingToDisplay.getCreatedTime().toDate();
@@ -135,6 +141,29 @@ public class ViewSighting extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // Gets the sighting's image from FireBase (if there is an image to retrieve)
+    // https://firebase.google.com/docs/storage/android/download-files
+    public void getImageFromFireBase() {
+        if (sightingToDisplay.getImageUrl() != null) {
+            // Create a storage reference from our app
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
+
+            // Gets the image from Firebase
+            StorageReference pathReference = storageRef.child(sightingToDisplay.getImageUrl());
+
+            // ImageView in your Activity
+            ImageView imageView = findViewById(R.id.sightingImageDetailView);
+
+            // Download directly from StorageReference using Glide (See MyAppGlideModule for Loader registration)
+            GlideApp.with(this /* context */)
+                    .load(pathReference)
+                    .into(imageView);
+        }
     }
 
     public void onDeleteButtonClicked(View v){
