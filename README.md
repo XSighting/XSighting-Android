@@ -52,3 +52,6 @@ Images:
   * [Glide docs](http://bumptech.github.io/glide/doc/download-setup.html)
   * [Glide GitHub](https://github.com/bumptech/glide)
   * [Firebase UI Storage with Glide](https://github.com/firebase/FirebaseUI-Android/blob/master/storage/README.md)
+[Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
+[Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
+

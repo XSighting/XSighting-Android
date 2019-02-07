@@ -58,6 +58,11 @@ dependencies {
 
     // Added for Espresso testing
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    // set up espresso
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+// include espresso-intents
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 }
 
 // Firebase
