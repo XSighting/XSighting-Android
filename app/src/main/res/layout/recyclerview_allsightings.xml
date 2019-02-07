@@ -37,7 +37,7 @@
                 android:text="Title"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -65,10 +65,11 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/xfont"
+            android:fontFamily="monospace"
             android:text="Description"
             android:textAlignment="textStart"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

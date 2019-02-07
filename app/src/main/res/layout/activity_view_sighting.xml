@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ViewSighting">
 
-    <TextView
-        android:id="@+id/postDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Date"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
-        app:layout_constraintEnd_toStartOf="@+id/postLocation"
-        app:layout_constraintStart_toEndOf="@+id/postedTag"
-        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
     <TextView
         android:id="@+id/postTitle"
@@ -28,95 +14,153 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Sighting Title"
+        android:fontFamily="@font/xfont"
+        android:text="Sighting Location"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/postedTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="posted on: "
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
-    <TextView
-        android:id="@+id/postLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Location"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
-        app:layout_constraintEnd_toStartOf="@+id/postUser"
-        app:layout_constraintStart_toEndOf="@+id/postDate"
-        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
-
-    <TextView
-        android:id="@+id/descriptionTag"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Description:"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/postDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postedTag" />
-
-    <TextView
-        android:id="@+id/postUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="by user"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/postLocation"
-        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
-
-    <TextView
-        android:id="@+id/postDescription"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTag" />
+        app:layout_constraintTop_toBottomOf="@+id/postTitle"
+        app:layout_constraintVertical_bias="0.705">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/userTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/xfont"
+                    android:text="By:  "
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/postUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="Username"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/xfont"
+                    android:text="Time:  "
+                    android:textSize="18sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descriptionTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/xfont"
+                android:text="Description:"
+                android:textSize="18sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                />
+
+            <TextView
+                android:id="@+id/postDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="TextView"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="bottom"
+
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/navigation"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/descriptionTag"-->
