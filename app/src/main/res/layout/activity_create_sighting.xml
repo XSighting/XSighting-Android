@@ -8,19 +8,21 @@
 
     <TextView
         android:id="@+id/header_report_sighting"
+        android:focusable="true"
+        android:text="@string/header_report_sighting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/xfont"
-        android:text="Report A Sighting"
         android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -56,7 +58,9 @@
                     android:fontFamily="@font/xfont"
                     android:text="Location:"
                     android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
                     android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/button_submit_report"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/header_report_sighting" />
@@ -68,15 +72,15 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:focusable="true"
                     android:fontFamily="monospace"
                     android:text="Location"
                     android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/header_report_sighting" />
-
-
             </LinearLayout>
 
             <TextView
@@ -86,9 +90,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:focusable="true"
                 android:fontFamily="@font/xfont"
                 android:text="Description:"
                 android:textAlignment="textStart"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,13 +108,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
-                android:fontFamily="monospace"
-                android:gravity="top|left"
-                android:hint="Include color shape of object, sounds, etc .. "
                 android:inputType="textMultiLine"
-                android:maxLines="6"
-                android:minLines="4"
+                android:hint="Include color shape of object, sounds, etc .. "
                 android:scrollbars="vertical"
+                android:background="@color/colorAccent"
+                android:fontFamily="monospace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/report_description_label" />
@@ -122,6 +126,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -137,29 +142,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sightingImage">
 
-                <Button
-                    android:id="@+id/takePictureButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="monospace"
-                    android:onClick="takePicture"
-                    android:text="Take Picture" />
+            <Button
+                android:id="@+id/takePictureButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/report_take_picture"
+                android:layout_weight="1"
+                android:onClick="takePicture"
+                android:text="@string/report_take_picture"
+                android:fontFamily="monospace"/>
 
-                <Button
-                    android:id="@+id/choosePictureButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="monospace"
-                    android:onClick="choosePictureFromFiles"
-                    android:text="Choose Picture" />
+            <Button
+                android:id="@+id/choosePictureButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/report_choose_picture"
+                android:layout_weight="1"
+                android:onClick="choosePictureFromFiles"
+                android:text="@string/report_choose_picture"
+                android:fontFamily="monospace"/>
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/sightingImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/report_chosen_image"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_submit_report"
@@ -176,12 +191,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:fontFamily="monospace"
+        android:clickable="true"
+        android:contentDescription="@string/button_create_sighting"
+        android:focusable="true"
         android:onClick="submitSighting"
         android:text="@string/report_submit"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
@@ -190,14 +206,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        android:focusable="true"
+        app:itemIconTint="@drawable/bottom_navigation_selector"
+        app:itemTextColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
