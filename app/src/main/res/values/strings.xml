@@ -2,9 +2,10 @@
     <string name="app_name">XSighting</string>
 
     <!--Navigation-->
-    <string name="title_user_profile">Your Profile</string>
-    <string name="title_home">Home</string>
-    <string name="title_add_sighting">Add Sighting</string>
+    <string name="navigation_title">Bottom Navigation</string>
+    <string name="navigation_user">Your Profile</string>
+    <string name="navigation_home">Home</string>
+    <string name="navigation_add_sighting">Add Sighting</string>
 
     <!-- Create Sighting Activity -->
     <string name="button_create_sighting">Create Sighting</string>
@@ -16,12 +17,20 @@
     <string name="report_description">Description</string>
     <string name="report_submit">Submit Report</string>
     <string name="report_description_long">Description of what you are reporting:</string>
+    <string name="report_take_picture">Take Picture</string>
+    <string name="report_choose_picture">Choose Picture</string>
+    <string name="report_chosen_image">Chosen Picture</string>
 
     <!--All Sightings-->
     <string name="welcome_all_sightings">No Feed Available</string>
+    <string name="all_sighting_title">Recent Sightings</string>
 
-    <!-- Notifications -->
-    <string name="msg_token_fmt" translatable="false">Token: InstanceID Token: %s</string>
-    <string name="default_notification_channel_id">default_notification_channel</string>
-    <string name="fcm_message">New Sighting Nearby</string>
+    <!--View Sighting-->
+    <string name="detail_time">Time: </string>
+    <string name="detail_title">Sighting Location</string>
+    <string name="detail_description">Description: </string>
+    <string name="detail_default">TextView</string>
+    <string name="detail_username">Username</string>
+    <string name="detail_user_tag">By:</string>
+
 </resources>
