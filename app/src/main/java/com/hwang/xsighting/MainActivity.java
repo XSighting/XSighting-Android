@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -20,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
@@ -29,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hwang.xsighting.models.Sighting;
 import com.hwang.xsighting.models.User;
@@ -45,20 +45,23 @@ public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
   private RecyclerView.LayoutManager layoutManager;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     user = FirebaseAuth.getInstance().getCurrentUser();
     if (user != null) {
+
       // User is signed in
-//      showName();
       Task<GetTokenResult> token = user.getIdToken(false);
+
+      setNavigation();
       Log.i(TAG, user.toString());
     } else {
+
       // No user signed in, direct them to Login
       Log.i(TAG, "About to launch sign in");
+
       // Choose authentication providers
       List<AuthUI.IdpConfig> providers = Arrays.asList(
               new AuthUI.IdpConfig.EmailBuilder().build());
@@ -73,26 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
       Log.i(TAG, "Sign up intent Sent");
     }
-    setContentView(R.layout.activity_main);
-    BottomNavigationView bottomNavigationView = (BottomNavigationView)
-            findViewById(R.id.navigation);
-    updateRecyclerView();
-    bottomNavigationView.setOnNavigationItemSelectedListener(
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-              @Override
-              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                  case R.id.navigation_home:
-                      Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-                      startActivity(homeIntent);
-                  case R.id.navigation_add_sighting:
-                    Intent addSighting = new Intent(MainActivity.this, CreateSighting.class);
-                    startActivity(addSighting);
-                }
-                return true;
-              }
-            });
-
   }
 
   @Override
@@ -103,20 +86,21 @@ public class MainActivity extends AppCompatActivity {
       IdpResponse response = IdpResponse.fromResultIntent(data);
 
       if (resultCode == RESULT_OK) {
+
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-//        showName();
+        updateRecyclerView();
+        setNavigation();
+
       } else {
-        // Sign in failed. If response is null the user canceled the
-        // sign-in flow using the back button. Otherwise check
-        // response.getError().getErrorCode() and handle the error.
-        // ...
+        // Sign in failed
       }
     }
   }
 
   // Creates new user document in Firebase if current user doesn't exist
   public void createNewUserIfUserDoesNotExist(final String loggedInUserId) {
+
     user = FirebaseAuth.getInstance().getCurrentUser();
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference docRef = db.collection("users").document(loggedInUserId);
@@ -152,21 +136,10 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-
-
-  /**
-   * TODO render user name
-   */
-  // Shows the user's name
-//  public void showName() {
-//    setContentView(R.layout.activity_main);
-//    TextView showName = findViewById(R.id.greeting);
-//    showName.setText("Hello " + user.getDisplayName());
-//  }
-
-
+  
   private void updateRecyclerView() {
-    recyclerView = (RecyclerView) findViewById(R.id.recyclerview_allsightings);
+
+    recyclerView = findViewById(R.id.recyclerview_allsightings);
     recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
@@ -178,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    db.collection("sighting")
+    db.collection("sighting").orderBy("createdTime", Query.Direction.ASCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
               @Override
               public void onEvent(@Nullable QuerySnapshot snapshots,
@@ -191,20 +164,42 @@ public class MainActivity extends AppCompatActivity {
                 for (DocumentChange dc : snapshots.getDocumentChanges()) {
                   switch (dc.getType()) {
                     case ADDED:
-                      Log.d(TAG, "New project: " + dc.getDocument().getData());
-                      adapter.add(dc.getDocument().toObject(Sighting.class));
+                      Log.d(TAG, "New sighting: " + dc.getDocument().getData());
+                      adapter.add(dc.getDocument().toObject(Sighting.class), dc.getDocument().getId());
                       break;
                     case MODIFIED:
-                      Log.d(TAG, "Modified project: " + dc.getDocument().getData());
-                      //TODO: Update the project
+                      Log.d(TAG, "Modified sighting: " + dc.getDocument().getData());
                       break;
                     case REMOVED:
-                      Log.d(TAG, "Removed project: " + dc.getDocument().getData());
-                      //TODO: Remove the project
+                      Log.d(TAG, "Removed sighting: " + dc.getDocument().getData());
                       break;
                   }
                 }
 
+              }
+            });
+  }
+
+  public void setNavigation(){
+
+    setContentView(R.layout.activity_main);
+    BottomNavigationView bottomNavigationView = (BottomNavigationView)
+            findViewById(R.id.navigation);
+    bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+    updateRecyclerView();
+    bottomNavigationView.setOnNavigationItemSelectedListener(
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+              @Override
+              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                  case R.id.navigation_home:
+                    Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(homeIntent);
+                  case R.id.navigation_add_sighting:
+                    Intent addSighting = new Intent(MainActivity.this, CreateSighting.class);
+                    startActivity(addSighting);
+                }
+                return true;
               }
             });
   }

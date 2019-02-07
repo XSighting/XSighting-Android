@@ -3,6 +3,9 @@ package com.hwang.xsighting.models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sighting {
     String authorId;
     String authorUsername;
@@ -11,20 +14,22 @@ public class Sighting {
     String locationName;
     String imageUrl;
     String description;
+    String firebaseId;
 
     // No argument constructor
     public Sighting() {};
 
     // Constructor
-    public Sighting(String authorId, String authorUsername, Timestamp createdTime, String locationName,
-                    GeoPoint locationData, String image_url, String description) {
+    public Sighting(String authorId, String authorUsername, Timestamp createdTime,
+                    GeoPoint locationData, String locationName, String imageUrl, String description) {
         this.authorId = authorId;
         this.authorUsername = authorUsername;
         this.createdTime = createdTime;
         this.locationData = locationData;
-        this.imageUrl = image_url;
-        this.description = description;
         this.locationName = locationName;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.firebaseId = "";
     }
 
     // Getters
@@ -56,6 +61,8 @@ public class Sighting {
         return locationName;
     }
 
+    public String getFirebaseId() {return firebaseId;}
+
     // Setters
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
@@ -84,4 +91,6 @@ public class Sighting {
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
+
+    public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
 }
