@@ -4,17 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +40,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.hwang.xsighting.models.Sighting;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -44,14 +63,30 @@ public class CreateSighting extends AppCompatActivity {
     private GeoPoint geoPointLocation;
     private FirebaseUser user;
 
+    // Picture variables
+    // https://github.com/NJCrain/health-tracker/blob/master/app/src/main/java/com/njcrain/android/healthtracker/activity/ProfileActivity.java
+    // https://developer.android.com/training/camera/photobasics
+    // https://developer.android.com/training/permissions/requesting
+    private final int MY_PERMISSIONS_ID = 0;
+    private boolean CAMERA_PERMISSION_GRANTED = false;
+    private boolean FILES_PERMISSION_GRANTED = false;
+    static final int PICK_IMAGE = 2;
+    private int REQUEST_TAKE_PHOTO = 3;
+    String currentPhotoPath = null;
+    ImageView sightingImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_sighting);
 
+        // Gets the imageView that will be updated when the user uploads a picture
+        sightingImage = findViewById(R.id.sightingImage);
+
         // Get Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
+
         // Set the username
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -61,7 +96,7 @@ public class CreateSighting extends AppCompatActivity {
         Timestamp timestamp = new Timestamp(dateData);
         EditText descriptionEditText = findViewById(R.id.report_description);
         String description = descriptionEditText.getText().toString();
-        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, lastLocation, geoPointLocation, description);
+        Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, currentPhotoPath, description);
 
         // Add a new document with a generated ID
         db.collection("sighting")
@@ -70,6 +105,9 @@ public class CreateSighting extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+
+                        savePictureToFireBase();
 
                         // https://developer.android.com/guide/topics/ui/notifiers/toasts
                         // Toast success message
@@ -97,6 +135,43 @@ public class CreateSighting extends AppCompatActivity {
                     }
                 });
     }
+
+    // Save the picture to the FireBase
+    public void savePictureToFireBase() {
+        if (currentPhotoPath != null) {
+
+            // Create a storage reference from our app
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+
+            // Create a child reference, imagesRef now points to "images"
+            StorageReference imagesRef = storageRef.child("images");
+
+            // Get the data from an ImageView as bytes
+            sightingImage.setDrawingCacheEnabled(true);
+            sightingImage.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) sightingImage.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            UploadTask uploadTask = imagesRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+        }
+    }
+
+
 
     // Gets user's current location
     public void getLocation() {
@@ -134,7 +209,7 @@ public class CreateSighting extends AppCompatActivity {
                             }
                         }
                     });
-        } else { // permission denide
+        } else { // permission denied
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)) {
             } else { // Request the permission
@@ -145,20 +220,152 @@ public class CreateSighting extends AppCompatActivity {
         }
     }
 
+    // Allows the user to take and save a new picture
+    public void takePicture(View v) {
+
+        // Checks to see if required permission have been granted
+        checkForPermissions();
+
+        // If required permission have been granted, invoke intent to take picture
+        if (CAMERA_PERMISSION_GRANTED
+                && FILES_PERMISSION_GRANTED) {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException error) {
+
+                    // Error occurred while creating the File
+                    Log.i("ErrorCreatingFile", error.toString());
+                }
+
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "com.example.android.fileprovider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
+            }
+        }
+    }
+
+    // Creates a collision-resistant file name for the photo that was taken
+    private File createImageFile() throws IOException {
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",   // suffix
+                storageDir      // directory
+        );
+
+        // Save a file path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    // Lets the user pick an image from their file system
+    // https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+    public void choosePictureFromFiles(View v) {
+
+        // Checks to see if the user has granted permissions to access the files
+        checkForPermissions();
+        if (FILES_PERMISSION_GRANTED) {
+            Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            getIntent.setType("image/*");
+
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+
+            Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+            startActivityForResult(chooserIntent, PICK_IMAGE);
+        }
+    }
+
+    // Updates the profilePicture ImageView with a new photo or one from the user's files
+    // Automatically invoked after a user interaction
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // If the interaction was taking a photo
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            // TODO: upload picture to Firebase
+            File image = new File(currentPhotoPath);
+            Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath());
+            sightingImage.setImageBitmap(bitmap);
+
+            // If the interaction was selecting a photo from files
+        } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            // https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore
+            Uri imagePath = data.getData();
+            currentPhotoPath = imagePath.getPath().toString();
+            try {
+                InputStream is = getContentResolver().openInputStream(imagePath);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+                sightingImage.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Log.i("ERROR", "IT'S NOT WORKING " + e);
+            }
+        }
+    }
+
+    // Checks to see if the user has granted necessary permissions
+    public void checkForPermissions() {
+
+        // Checks to see if the user has already granted CAMERA and WRITE_EXTERNAL_STORAGE permission
+        if ((ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
+            // Request the permissions if not
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_ID);
+        } else {
+
+            // 'Remembers' if permission has been granted
+            CAMERA_PERMISSION_GRANTED = true;
+            FILES_PERMISSION_GRANTED = true;
+        }
+    }
+
+    // Automatically invoked after the user responds to the permission request in checkForPermissions()
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATIONS: {
+            case MY_PERMISSIONS_ID: {
 
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Checks to see if CAMERA permission was granted, if request is cancelled, the result arrays are empty
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, get the location
-                    getLocation();
-                } else { // Permission denied
-                    lastLocation = "Unknown";
+                    // CAMERA permission was granted
+                    CAMERA_PERMISSION_GRANTED = true;
                 }
-                return;
+
+                // Checks to see if WRITE_EXTERNAL_STORAGE permission was granted
+                if (grantResults.length > 0
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    // WRITE_EXTERNAL_STORAGE permission was granted
+                    FILES_PERMISSION_GRANTED = true;
+                }
             }
         }
     }

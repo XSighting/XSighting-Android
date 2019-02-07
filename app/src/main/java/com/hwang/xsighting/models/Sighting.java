@@ -12,7 +12,7 @@ public class Sighting {
     Timestamp createdTime;
     GeoPoint locationData;
     String locationName;
-    List<String> imageUrls;
+    String imageUrl;
     String description;
     String firebaseId;
 
@@ -20,15 +20,15 @@ public class Sighting {
     public Sighting() {};
 
     // Constructor
-    public Sighting(String authorId, String authorUsername, Timestamp createdTime, String locationName,
-                    GeoPoint locationData, String description) {
+    public Sighting(String authorId, String authorUsername, Timestamp createdTime,
+                    GeoPoint locationData, String locationName, String imageUrl, String description) {
         this.authorId = authorId;
         this.authorUsername = authorUsername;
         this.createdTime = createdTime;
         this.locationData = locationData;
-        this.imageUrls = new ArrayList<>();
-        this.description = description;
         this.locationName = locationName;
+        this.imageUrl = imageUrl;
+        this.description = description;
         this.firebaseId = "";
     }
 
@@ -49,8 +49,8 @@ public class Sighting {
         return this.locationData;
     }
 
-    public List<String> getImageUrls() {
-        return this.imageUrls;
+    public String getImageUrl() {
+        return this.imageUrl;
     }
 
     public String getDescription() {
@@ -80,8 +80,8 @@ public class Sighting {
         this.locationData = locationData;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void setDescription(String description) {
@@ -93,9 +93,4 @@ public class Sighting {
     }
 
     public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
-
-    // Adds an image url to imageUrls
-    public void addImageUrl(String imageUrl) {
-        this.imageUrls.add(imageUrl);
-    }
 }
