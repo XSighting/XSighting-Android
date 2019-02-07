@@ -142,6 +142,36 @@
 
         </LinearLayout>
     </ScrollView>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/navigation">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_up_vote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:drawableTop="@drawable/ic_up_arrow"
+            android:text="@string/detail_vote_count"
+            android:layout_marginBottom="49dp"
+            android:layout_weight="1"
+            android:onClick="upVote" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_down_vote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:drawableTop="@drawable/ic_down_arrow"
+            android:text="@string/detail_vote_count"
+            android:gravity="center|center_vertical"
+            android:layout_marginBottom="49dp"
+            android:layout_weight="1"
+            android:onClick="downVote" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"

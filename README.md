@@ -36,9 +36,21 @@ None at this time.
 
 ## Credits/Sources
 UFO Icon - Sci Fi by Alina Oleynik from the Noun Project
+
+Up Arrow Icon - Arrow by Ines Simoes from the Noun Project
+
+Down Arrow Icon - Arrow by Ines Simoes from the Noun Project
+
 [firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
+
 [Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
+
 [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
+
 [image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
+
 [Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
+
 [Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
+
+[Button Drawable and Text](https://stackoverflow.com/questions/1532876/android-combining-text-image-on-a-button-or-imagebutton)

@@ -32,5 +32,6 @@
     <string name="detail_default">TextView</string>
     <string name="detail_username">Username</string>
     <string name="detail_user_tag">By:</string>
+    <string name="detail_vote_count">No Votes</string>
 
 </resources>

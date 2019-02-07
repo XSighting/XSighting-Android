@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // Grab sighting and sort by created time
     db.collection("sighting").orderBy("createdTime", Query.Direction.ASCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
               @Override

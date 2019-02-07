@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,16 +89,22 @@ public class ViewSighting extends AppCompatActivity {
                         TextView user = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
+                        Button upVote = findViewById(R.id.button_up_vote);
+                        Button downVote = findViewById(R.id.button_down_vote);
 
                         // Make the Date String Pretty
                         Date toDate = sightingToDisplay.getCreatedTime().toDate();
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy @ HH:mm");
                         String stringOfTime = dateFormat.format(toDate);
+                        String displayUpVote = Integer.toString(sightingToDisplay.getUpVote());
+                        String displayDownVote = Integer.toString(sightingToDisplay.getDownVote());
 
                         user.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
                         title.setText("Sighted in " + sightingToDisplay.getLocationName());
                         date.setText(stringOfTime);
+                        upVote.setText(displayUpVote);
+                        downVote.setText(displayDownVote);
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -121,5 +130,11 @@ public class ViewSighting extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onClickUpVote(View view){
+
+        DocumentReference docRef = db.collection("sighting").document(sightingId);
+        docRef.update("upVote", 1);
     }
 }
