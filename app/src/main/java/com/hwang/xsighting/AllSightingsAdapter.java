@@ -45,8 +45,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
   // https://github.com/JessLovell/taskMaster/blob/review/app/src/main/java/com/taskmaster/taskmaster/MyAdapter.java
   public void add(Sighting sighting, String id) {
     sighting.setFirebaseId(id);
-    sightings.add(sighting);
-    notifyItemInserted(sightings.size() - 1);
+    sightings.add(0, sighting);
+    notifyItemInserted(0);
   }
 
   public void setSightings(List<Sighting> sightings) {
@@ -86,12 +86,12 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
     String stringOfTime = dateFormat.format(toDate);
 
-    // Injects sighting's content into the view
+//     Injects sighting's content into the view
     holder.timeStamp.setText(stringOfTime);
     holder.location.setText(sighting.getLocationName());
     holder.sightingId.setText(sighting.getFirebaseId());
-    if (sighting.getDescription().length() > 50){
-      holder.description.setText(sighting.getDescription().substring(0, 50));
+    if (sighting.getDescription().length() > 60){
+      holder.description.setText(sighting.getDescription().substring(0, 60) + "...");
     } else {
       holder.description.setText(sighting.getDescription());
     }

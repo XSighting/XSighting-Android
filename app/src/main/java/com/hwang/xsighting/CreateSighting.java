@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +32,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -86,6 +89,7 @@ public class CreateSighting extends AppCompatActivity {
 
         // Set the username
         user = FirebaseAuth.getInstance().getCurrentUser();
+        setNavigation();
     }
 
     public void submitSighting(View view) {
@@ -365,5 +369,27 @@ public class CreateSighting extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void setNavigation(){
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                Intent homeIntent = new Intent(CreateSighting.this, MainActivity.class);
+                                startActivity(homeIntent);
+                            case R.id.navigation_add_sighting:
+                                Intent addSighting = new Intent(CreateSighting.this, CreateSighting.class);
+                                startActivity(addSighting);
+                        }
+                        return true;
+                    }
+                });
     }
 }
