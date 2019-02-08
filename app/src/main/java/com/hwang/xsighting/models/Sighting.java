@@ -4,6 +4,8 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Sighting {
@@ -15,6 +17,9 @@ public class Sighting {
     String imageUrl;
     String description;
     String firebaseId;
+    Integer upVote;
+    Integer downVote;
+
 
     // No argument constructor
     public Sighting() {};
@@ -30,6 +35,8 @@ public class Sighting {
         this.imageUrl = imageUrl;
         this.description = description;
         this.firebaseId = "";
+        this.upVote = 0;
+        this.downVote = 0;
     }
 
     // Getters
@@ -63,6 +70,12 @@ public class Sighting {
 
     public String getFirebaseId() {return firebaseId;}
 
+    public int getUpVote() { return upVote; }
+
+    public int getDownVote() { return downVote; }
+
+
+
     // Setters
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
@@ -76,7 +89,7 @@ public class Sighting {
         this.createdTime = createdTime;
     }
 
-    public void setLocation(GeoPoint location) {
+    public void setLocation(GeoPoint locationData) {
         this.locationData = locationData;
     }
 
@@ -93,4 +106,12 @@ public class Sighting {
     }
 
     public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
+
+    public void setUpVote(Integer upVote) { this.upVote = upVote; }
+
+    public void setDownVote(Integer downVote) { this.downVote = downVote; }
+
+
+
+
 }

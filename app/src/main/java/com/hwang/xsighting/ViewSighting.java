@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +22,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.hwang.xsighting.models.Sighting;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ViewSighting extends AppCompatActivity {
 
@@ -38,6 +41,9 @@ public class ViewSighting extends AppCompatActivity {
     private Sighting sightingToDisplay;
     private FirebaseUser user;
     private ImageView sightingImageDetailView;
+    private Integer upVoteCount;
+    private Integer downVoteCount;
+    private HashMap<String, Boolean> voteTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,16 +110,28 @@ public class ViewSighting extends AppCompatActivity {
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
                         getImageFromFireBase();
+                        Button upVote = findViewById(R.id.button_up_vote);
+                        Button downVote = findViewById(R.id.button_down_vote);
 
                         // Make the Date String Pretty
                         Date toDate = sightingToDisplay.getCreatedTime().toDate();
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy @ HH:mm");
                         String stringOfTime = dateFormat.format(toDate);
+                        upVoteCount = sightingToDisplay.getUpVote();
+                        downVoteCount = sightingToDisplay.getDownVote();
+                        String displayUpVote = Integer.toString(upVoteCount);
+                        String displayDownVote = Integer.toString(downVoteCount);
 
                         userName.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
                         title.setText("Sighted in " + sightingToDisplay.getLocationName());
                         date.setText(stringOfTime);
+                        upVote.setText(displayUpVote);
+                        if(downVoteCount == 0) {
+                            downVote.setText(displayDownVote);
+                        }else{
+                            downVote.setText("-" + displayDownVote);
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -140,6 +158,24 @@ public class ViewSighting extends AppCompatActivity {
             }
         });
     }
+
+    public void onClickUpVote(View view){
+
+        DocumentReference docRef = db.collection("sighting").document(sightingId);
+
+        docRef.update("upVote", upVoteCount + 1);
+        addRealtimeUpdate();
+
+    }
+
+    public void onClickDownVote(View view) {
+
+        DocumentReference docRef = db.collection("sighting").document(sightingId);
+
+        docRef.update("downVote", downVoteCount + 1);
+        addRealtimeUpdate();
+    }
+
 
     // Gets the sighting's image from FireBase (if there is an image to retrieve)
     // https://firebase.google.com/docs/storage/android/download-files
@@ -179,5 +215,21 @@ public class ViewSighting extends AppCompatActivity {
         // Redirect to Main Activity
         Intent redirectMain = new Intent(this, MainActivity.class);
         startActivity(redirectMain);
+    }
+
+    private void addRealtimeUpdate() {
+        DocumentReference contactListener = db.collection("sighting").document(sightingId);
+        contactListener.addSnapshotListener(new EventListener< DocumentSnapshot >() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d("ERROR", e.getMessage());
+                    return;
+                }
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    getContent();
+                }
+            }
+        });
     }
 }
