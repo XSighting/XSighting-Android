@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorWhiteBackground</item>
         <item name="android:windowBackground">@color/colorOminous</item>
         <item name="android:fontFamily">monospace</item>
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>

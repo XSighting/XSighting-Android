@@ -17,7 +17,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/xfont"
         android:text="@string/detail_title"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorWhiteBackground"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
