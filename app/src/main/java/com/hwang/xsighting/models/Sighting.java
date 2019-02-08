@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,8 +17,9 @@ public class Sighting {
     String imageUrl;
     String description;
     String firebaseId;
-    HashSet<Integer> upVote;
-    HashSet<Integer> downVote;
+    Integer upVote;
+    Integer downVote;
+    HashMap<String, Boolean> voted;
 
     // No argument constructor
     public Sighting() {};
@@ -33,8 +35,9 @@ public class Sighting {
         this.imageUrl = imageUrl;
         this.description = description;
         this.firebaseId = "";
-        this.upVote = new HashSet<>();
-        this.downVote = new HashSet<>();
+        this.upVote = 0;
+        this.downVote = 0;
+        this.voted = new HashMap<>();
     }
 
     // Getters
@@ -68,9 +71,11 @@ public class Sighting {
 
     public String getFirebaseId() {return firebaseId;}
 
-    public int getUpVote() { return upVote.size(); }
+    public int getUpVote() { return upVote; }
 
-    public int getDownVote() { return downVote.size(); }
+    public int getDownVote() { return downVote; }
+
+    public HashMap<String, Boolean> getVoted() { return voted; }
 
 
     // Setters
@@ -104,9 +109,13 @@ public class Sighting {
 
     public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
 
-    public void setUpVote(int vote) { upVote.add(vote); }
+    public void setUpVote(Integer upVote) { this.upVote = upVote; }
 
-    public void setDownVote(int vote) { downVote.add(vote); }
+    public void setDownVote(Integer downVote) { this.downVote = downVote; }
+
+    public void setVoted(String key, boolean value) {
+        this.voted.put(key, value);
+    }
 
 
 }

@@ -85,11 +85,20 @@ public class CreateSighting extends AppCompatActivity {
 
         // Get Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        Log.i("LOCATION", "CALLING GET LOCATION");
         getLocation();
 
         // Set the username
         user = FirebaseAuth.getInstance().getCurrentUser();
         setNavigation();
+    }
+    @Override
+    protected  void onRestart(){
+        super.onRestart();
+
+        Log.i("LOCATION", "CALLING GET LOCATION in RESTART");
+        getLocation();
+
     }
 
     public void submitSighting(View view) {
@@ -172,8 +181,6 @@ public class CreateSighting extends AppCompatActivity {
         }
     }
 
-
-
     // Gets user's current location
     public void getLocation() {
 
@@ -200,7 +207,7 @@ public class CreateSighting extends AppCompatActivity {
 
                                 // Set the location text
                                 TextView locationText = findViewById(R.id.report_location);
-                                locationText.setText("Your location: " + lastLocation);
+                                locationText.setText(lastLocation);
 
                                 // Set the GeoPoint so location can be saved to Cloud Firestore Database
                                 geoPointLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
@@ -371,8 +378,8 @@ public class CreateSighting extends AppCompatActivity {
         }
     }
 
+    // Adds bottom navigation
     public void setNavigation(){
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);

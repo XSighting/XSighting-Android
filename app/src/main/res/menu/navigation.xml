@@ -5,7 +5,8 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:contentDescription="@string/navigation_home"
-        android:title="@string/navigation_home" />
+        android:title="@string/navigation_home"
+        />
 
     <item
         android:id="@+id/navigation_add_sighting"

@@ -44,13 +44,25 @@ Down Arrow Icon - Arrow by Ines Simoes from the Noun Project
 [firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
 
 [Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
-
 [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
+Images:
+* [Image upload and camera permissions](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
+* [Getting images from user's gallery](https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery)
+* [Getting image file names/paths](https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore)
+* [Inspired by NJCrain](https://github.com/NJCrain/health-tracker/blob/master/app/src/main/java/com/njcrain/android/healthtracker/activity/ProfileActivity.java)
+* [Android docs - camera basic](https://developer.android.com/training/camera/photobasics)
+* [Android docs - requesting permissions](https://developer.android.com/training/permissions/requesting)
+* [Firebase upload files](https://firebase.google.com/docs/storage/android/upload-files)
+* [Firebase download files](https://firebase.google.com/docs/storage/android/download-files)
+* Glide:
+  * [Glide docs](http://bumptech.github.io/glide/doc/download-setup.html)
+  * [Glide GitHub](https://github.com/bumptech/glide)
+  * [Firebase UI Storage with Glide](https://github.com/firebase/FirebaseUI-Android/blob/master/storage/README.md)
 
 [image upload](https://stackoverflow.com/questions/32052587/android-studio-permissions-for-image-upload)
 
 [Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
-
 [Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
 
 [Button Drawable and Text](https://stackoverflow.com/questions/1532876/android-combining-text-image-on-a-button-or-imagebutton)
+
