@@ -34,7 +34,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorWhiteBackground"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,6 +163,37 @@
 
         </LinearLayout>
     </ScrollView>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/navigation">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_up_vote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="49dp"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_up_arrow"
+            android:gravity="center|center_vertical"
+            android:onClick="onClickUpVote"
+            android:text="@string/detail_vote_count" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_down_vote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="49dp"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_down_arrow"
+            android:gravity="center|center_vertical"
+            android:onClick="onClickDownVote"
+            android:text="@string/detail_vote_count" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"

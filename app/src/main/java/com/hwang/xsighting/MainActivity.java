@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
       // User is signed in
       Task<GetTokenResult> token = user.getIdToken(false);
-
       setNavigation();
       Log.i(TAG, user.toString());
     } else {
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // Grab sighting and sort by created time
     db.collection("sighting").orderBy("createdTime", Query.Direction.ASCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
               @Override

@@ -17,7 +17,7 @@
         android:fontFamily="@font/xfont"
         android:text="@string/all_sighting_title"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorWhiteBackground"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerview_allsightings"
         app:layout_constraintEnd_toEndOf="parent"
