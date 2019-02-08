@@ -22,7 +22,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'com.google.android.material:material:1.0.0-beta01'
+    implementation 'com.google.android.material:material:1.1.0-alpha03'
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.7'
@@ -47,22 +47,20 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.8.0") {
         exclude group: "com.android.support"
     }
-    implementation 'com.android.support:support-fragment:28.0.0'
+
+    // Annotations
     annotationProcessor 'androidx.annotation:annotation:1.0.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
+    // Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
     // Testing
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
-
-    // Added for Espresso testing
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    // set up espresso
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-// include espresso-intents
-    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+
 }
 
 // Firebase

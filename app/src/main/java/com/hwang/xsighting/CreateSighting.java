@@ -338,7 +338,7 @@ public class CreateSighting extends AppCompatActivity {
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.CAMERA)
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED)) {
 
             // Request the permissions if not

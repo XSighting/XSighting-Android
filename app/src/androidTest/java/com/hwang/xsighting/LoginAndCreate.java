@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-//import com.hwang.xsighting.R;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -17,6 +15,7 @@ import org.junit.runner.RunWith;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -24,23 +23,43 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+// https://firebase.google.com/docs/test-lab/android/robo-ux-test
+// https://firebase.google.com/docs/test-lab/
+// https://www.youtube.com/watch?v=XV2uTiZ9SH0
+// https://www.youtube.com/watch?v=o0aUuKztO4A
+// https://www.youtube.com/watch?v=D6V-pyE_ywA
+/* Evan did extensive research on using Espresso Test Recorder and Robo Tester to test
+creating a new sighting and making sure that it exists and shows up on the MainActivity.
+Espresso Test Recorder isn't 'smart' enough to do anything like that and Robo Tester kept
+threatening to charge us.
+
+// https://stackoverflow.com/questions/53473006/unit-testing-with-mockito-firebase
+Derrick looked into unit testing with Mockito because it only handles one activity at a time.
+Since we're dealing with sub-categories, activities are dependent on others.
+He attempted to turn the navigation into a fragment which would've allowed us to test easier but
+it was a no go. */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class LoginAndCreate {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.ACCESS_COARSE_LOCATION");
+
     @Test
-    public void mainActivityTest() {
+    public void loginAndCreate() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -66,7 +85,7 @@ public class MainActivityTest {
                                         withId(R.id.email_layout),
                                         0),
                                 0)));
-        textInputEditText2.perform(scrollTo(), replaceText("evanslaton@gm"), closeSoftKeyboard());
+        textInputEditText2.perform(scrollTo(), replaceText("test@tes"), closeSoftKeyboard());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -78,16 +97,16 @@ public class MainActivityTest {
         }
 
         ViewInteraction textInputEditText3 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gm"),
+                allOf(withId(R.id.email), withText("test@tes"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.email_layout),
                                         0),
                                 0)));
-        textInputEditText3.perform(scrollTo(), replaceText("evanslaton@gmail"));
+        textInputEditText3.perform(scrollTo(), replaceText("test@test.com"));
 
         ViewInteraction textInputEditText4 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gmail"),
+                allOf(withId(R.id.email), withText("test@test.com"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.email_layout),
@@ -101,62 +120,6 @@ public class MainActivityTest {
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText5 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gmail"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.email_layout),
-                                        0),
-                                0)));
-        textInputEditText5.perform(scrollTo(), replaceText("evanslaton@gmail.co"));
-
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gmail.co"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.email_layout),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText6.perform(closeSoftKeyboard());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText7 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gmail.co"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.email_layout),
-                                        0),
-                                0)));
-        textInputEditText7.perform(scrollTo(), replaceText("evanslaton@gmail.com"));
-
-        ViewInteraction textInputEditText8 = onView(
-                allOf(withId(R.id.email), withText("evanslaton@gmail.com"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.email_layout),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText8.perform(closeSoftKeyboard());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -180,14 +143,14 @@ public class MainActivityTest {
             e.printStackTrace();
         }
 
-        ViewInteraction textInputEditText9 = onView(
+        ViewInteraction textInputEditText5 = onView(
                 allOf(withId(R.id.password),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.password_layout),
                                         0),
                                 0)));
-        textInputEditText9.perform(scrollTo(), replaceText("111111"), closeSoftKeyboard());
+        textInputEditText5.perform(scrollTo(), replaceText("123456"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.button_done), withText("Sign in"),
@@ -197,6 +160,53 @@ public class MainActivityTest {
                                         0),
                                 4)));
         appCompatButton2.perform(scrollTo(), click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.navigation_add_sighting), withContentDescription("Add Sighting"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.navigation),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.button_submit_report), withText("Submit Report"), withContentDescription("Create Sighting"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
@@ -216,10 +226,5 @@ public class MainActivityTest {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
-    }
-
-    @Test
-    public void viewTextIsMatched(){
-        onView(withId(R.id.banner_title_all_sightings)).check(matches(withText(R.string.all_sighting_title)));
     }
 }

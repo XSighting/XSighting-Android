@@ -108,8 +108,6 @@ public class ViewSighting extends AppCompatActivity {
                         if (user.getUid().equals(sightingToDisplay.getAuthorId())) {
                             // Allow creator to delete the post
                             deleteButton.setVisibility(View.VISIBLE);
-                        } else {
-                            deleteButton.setVisibility(View.INVISIBLE);
                         }
 
                         // Set Text fields with the sighting
@@ -221,7 +219,8 @@ public class ViewSighting extends AppCompatActivity {
         toast.show();
 
         // Redirect to Main Activity
-        finish();
+        Intent redirectMain = new Intent(this, MainActivity.class);
+        startActivity(redirectMain);
     }
 
     private void addRealtimeUpdate() {
