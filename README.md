@@ -91,6 +91,10 @@ Notifications | When a sighting is created, all users will receive a notificatio
 7. First build the application from the CLI using: `./gradlew build`.
 8. Run the application from the CLI using: `./gradlew bootrun`.
 
+## Accessibility Scanner Report
+### View Reports:
+* [Accessibility Report 02/07/2019](assets/accessibility_report/accessibility_report_0202219)
+
 ## Credits, Sources, & Technologies
 ### Technologies:
 Android Studios, Java, Firebase Services, Google Play, Glide, Espresso Testing, Git, GitHub

@@ -1,0 +1,18 @@
+The following is a list of opportunities to improve the accessibility of XSighting. Each item corresponds to an outlined area on the attached screenshot.
+
+Text contrast
+[252,222][555,315]
+The item's text contrast ratio is 1.43. This ratio is based on an estimated foreground color of #FFFFFF and an estimated background color of #F1D592. Consider increasing this item's text contrast ratio to 3.00 or greater.
+
+Text contrast
+com.hwang.xsighting:id/report_description
+The item's text contrast ratio is 2.68. This ratio is based on an estimated foreground color of #9E9E9E and an estimated background color of #FFFFFF. Consider increasing this item's text contrast ratio to 3.00 or greater.
+
+Touch target
+com.hwang.xsighting:id/report_description
+This item's height is 45dp. Consider making the height of this touch target 48dp or larger.
+
+Image contrast
+[0,171][196,367]
+The image's contrast ratio is 1.43. This ratio is based on an estimated foreground color of #FFFFFF and an estimated background color of #F1D592. Consider increasing this ratio to 3.00 or greater.
+

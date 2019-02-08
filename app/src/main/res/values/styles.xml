@@ -5,14 +5,22 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorWhiteBackground</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/colorOminous</item>
         <item name="android:fontFamily">monospace</item>
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
         <item name="android:textColorSecondary">@android:color/black</item>
         <item name="actionMenuTextColor">@android:color/black</item>
-
+        <item name="toolbarStyle">@style/CustomToolBarStyle</item>
 
     </style>
+
+    <style name="CustomToolBarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="subtitleTextAppearance">@color/colorPrimaryDark</item>
+        <item name="titleTextAppearance">@color/colorPrimaryDark</item>
+    </style>
+
 
 </resources>
