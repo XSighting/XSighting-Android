@@ -76,7 +76,7 @@ public class Sighting {
         this.createdTime = createdTime;
     }
 
-    public void setLocation(GeoPoint location) {
+    public void setLocation(GeoPoint locationData) {
         this.locationData = locationData;
     }
 
