@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,9 +18,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.hwang.xsighting.models.Sighting;
 
 import java.text.SimpleDateFormat;
@@ -25,22 +32,24 @@ import java.util.Date;
 
 public class ViewSighting extends AppCompatActivity {
 
-    //TODO: Check that as 'final' it does not cause issues
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String sightingId;
     private final String TAG = "SightingDetail";
     private Sighting sightingToDisplay;
+    private FirebaseUser user;
+    private ImageView sightingImageDetailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sighting);
-        sightingId = getIntent().getStringExtra("SIGHTING_ID");
 
+        sightingId = getIntent().getStringExtra("SIGHTING_ID");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        sightingImageDetailView = findViewById(R.id.sightingImageDetailView);
 
         getContent();
         setNavigation();
-
     }
 
     public void setNavigation(){
@@ -54,11 +63,15 @@ public class ViewSighting extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                Intent homeIntent = new Intent(ViewSighting.this, MainActivity.class);
+                                Intent homeIntent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(homeIntent);
+                                overridePendingTransition(0, 0);
+                                break;
                             case R.id.navigation_add_sighting:
-                                Intent addSighting = new Intent(ViewSighting.this, CreateSighting.class);
+                                Intent addSighting = new Intent(getBaseContext(), CreateSighting.class);
                                 startActivity(addSighting);
+                                overridePendingTransition(0, 0);
+                                break;
                         }
                         return true;
                     }
@@ -77,18 +90,27 @@ public class ViewSighting extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         sightingToDisplay = document.toObject(Sighting.class);
 
+                        // check to see if the logged in user created the post
+                        Button deleteButton = findViewById(R.id.delete_sighting);
+
+                        if (user.getUid().equals(sightingToDisplay.getAuthorId())) {
+                            // Allow creator to delete the post
+                            deleteButton.setVisibility(View.VISIBLE);
+                        }
+
                         // Set Text fields with the sighting
                         TextView date = findViewById(R.id.postDate);
-                        TextView user = findViewById(R.id.postUser);
+                        TextView userName = findViewById(R.id.postUser);
                         TextView description = findViewById(R.id.postDescription);
                         TextView title = findViewById(R.id.postTitle);
+                        getImageFromFireBase();
 
                         // Make the Date String Pretty
                         Date toDate = sightingToDisplay.getCreatedTime().toDate();
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy @ HH:mm");
                         String stringOfTime = dateFormat.format(toDate);
 
-                        user.setText(sightingToDisplay.getAuthorUsername());
+                        userName.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
                         title.setText("Sighted in " + sightingToDisplay.getLocationName());
                         date.setText(stringOfTime);
@@ -117,5 +139,45 @@ public class ViewSighting extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // Gets the sighting's image from FireBase (if there is an image to retrieve)
+    // https://firebase.google.com/docs/storage/android/download-files
+    public void getImageFromFireBase() {
+        if (sightingToDisplay.getImageUrl() != null) {
+            // Create a storage reference from our app
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
+
+            // Gets the image from Firebase
+            StorageReference pathReference = storageRef.child(sightingToDisplay.getImageUrl());
+
+            // ImageView in your Activity
+            ImageView imageView = findViewById(R.id.sightingImageDetailView);
+
+            // Download directly from StorageReference using Glide (See MyAppGlideModule for Loader registration)
+            GlideApp.with(this /* context */)
+                    .load(pathReference)
+                    .into(imageView);
+        }
+    }
+
+    public void onDeleteButtonClicked(View v){
+
+        db.collection("sighting").document(sightingId).delete();
+
+        // Notify the user that delete was successful
+        Context context = getApplicationContext();
+        CharSequence text = "Sighting was deleted";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        // Redirect to Main Activity
+        Intent redirectMain = new Intent(this, MainActivity.class);
+        startActivity(redirectMain);
     }
 }

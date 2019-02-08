@@ -2,9 +2,10 @@
     <string name="app_name">XSighting</string>
 
     <!--Navigation-->
-    <string name="title_user_profile">Your Profile</string>
-    <string name="title_home">Home</string>
-    <string name="title_add_sighting">Add Sighting</string>
+    <string name="navigation_title">Bottom Navigation</string>
+    <string name="navigation_user">Your Profile</string>
+    <string name="navigation_home">Home</string>
+    <string name="navigation_add_sighting">Add Sighting</string>
 
     <!-- Create Sighting Activity -->
     <string name="button_create_sighting">Create Sighting</string>
@@ -16,7 +17,30 @@
     <string name="report_description">Description</string>
     <string name="report_submit">Submit Report</string>
     <string name="report_description_long">Description of what you are reporting:</string>
+    <string name="report_take_picture">Take Picture</string>
+    <string name="report_choose_picture">Choose Picture</string>
+    <string name="report_chosen_image">Chosen Picture</string>
 
     <!--All Sightings-->
     <string name="welcome_all_sightings">No Feed Available</string>
+    <string name="all_sighting_title">Recent Sightings</string>
+
+    <!--View Sighting-->
+    <string name="detail_time">Time: </string>
+    <string name="detail_title">Sighting Location</string>
+    <string name="detail_description">Description: </string>
+    <string name="detail_default">TextView</string>
+    <string name="detail_username">Username</string>
+    <string name="detail_user_tag">By:</string>
+    <string name="location">Location:</string>
+    <string name="location_hint">Location</string>
+    <string name="description_tag">Description:</string>
+    <string name="include_color_shape_of_object_sounds_etc">Include color shape of object, sounds, etc ..</string>
+    <string name="add_photo_tag">Add Photo:</string>
+    <string name="delete_this_sighting">Delete this sighting</string>
+    <string name="insert_an_image">Insert_an_image</string>
+    <string name="title_tag">Title</string>
+    <string name="date_tag">Date</string>
+    <string name="description_tag_recy">Description</string>
+
 </resources>

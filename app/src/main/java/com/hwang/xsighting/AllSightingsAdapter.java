@@ -49,6 +49,15 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     notifyItemInserted(0);
   }
 
+  public void remove(Sighting sighting) {
+    for (int i = 0; i < sightings.size(); i++) {
+      if (sighting.equals(sightings.get(i))){
+        sightings.remove(i);
+        notifyItemRemoved(i);
+      }
+    }
+  }
+
   public void setSightings(List<Sighting> sightings) {
     this.sightings = sightings;
     this.notifyDataSetChanged();
