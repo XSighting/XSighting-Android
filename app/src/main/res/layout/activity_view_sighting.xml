@@ -157,7 +157,8 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="monospace"
                 android:onClick="onDeleteButtonClicked"
-                android:text="Delete this sighting" />
+                android:text="Delete this sighting"
+                android:visibility="invisible"/>
 
         </LinearLayout>
     </ScrollView>
