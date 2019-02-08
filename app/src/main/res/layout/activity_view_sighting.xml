@@ -53,6 +53,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/insert_an_image"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
@@ -157,7 +158,8 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="monospace"
                 android:onClick="onDeleteButtonClicked"
-                android:text="Delete this sighting" />
+                android:text="@string/delete_this_sighting"
+                android:visibility="invisible"/>
 
         </LinearLayout>
     </ScrollView>

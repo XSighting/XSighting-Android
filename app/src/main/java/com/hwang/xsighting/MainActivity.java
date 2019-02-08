@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onRestart() {
-    super.onRestart();
-    updateRecyclerView();
-  }
-
-  @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
@@ -99,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-        updateRecyclerView();
         setNavigation();
 
       } else {
         // Sign in failed
+        Log.i(TAG, "Login Failed");
       }
     }
   }
@@ -264,7 +258,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Error updating deviceToken", e);
               }
             });
-
   }
-
 }

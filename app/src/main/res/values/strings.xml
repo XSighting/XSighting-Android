@@ -32,5 +32,15 @@
     <string name="detail_default">TextView</string>
     <string name="detail_username">Username</string>
     <string name="detail_user_tag">By:</string>
+    <string name="location">Location:</string>
+    <string name="location_hint">Location</string>
+    <string name="description_tag">Description:</string>
+    <string name="include_color_shape_of_object_sounds_etc">Include color shape of object, sounds, etc ..</string>
+    <string name="add_photo_tag">Add Photo:</string>
+    <string name="delete_this_sighting">Delete this sighting</string>
+    <string name="insert_an_image">Insert_an_image</string>
+    <string name="title_tag">Title</string>
+    <string name="date_tag">Date</string>
+    <string name="description_tag_recy">Description</string>
 
 </resources>
