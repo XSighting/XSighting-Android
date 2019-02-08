@@ -19,7 +19,7 @@ public class Sighting {
     String firebaseId;
     Integer upVote;
     Integer downVote;
-    HashMap<String, Boolean> voted;
+
 
     // No argument constructor
     public Sighting() {};
@@ -37,7 +37,6 @@ public class Sighting {
         this.firebaseId = "";
         this.upVote = 0;
         this.downVote = 0;
-        this.voted = new HashMap<>();
     }
 
     // Getters
@@ -75,7 +74,6 @@ public class Sighting {
 
     public int getDownVote() { return downVote; }
 
-    public HashMap<String, Boolean> getVoted() { return voted; }
 
 
     // Setters
@@ -113,9 +111,7 @@ public class Sighting {
 
     public void setDownVote(Integer downVote) { this.downVote = downVote; }
 
-    public void setVoted(String key, boolean value) {
-        this.voted.put(key, value);
-    }
+
 
 
 }

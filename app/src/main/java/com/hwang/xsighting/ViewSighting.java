@@ -171,35 +171,19 @@ public class ViewSighting extends AppCompatActivity {
 
         DocumentReference docRef = db.collection("sighting").document(sightingId);
 
+        docRef.update("upVote", upVoteCount + 1);
+        addRealtimeUpdate();
 
-        if(sightingToDisplay.getVoted().get(user.getUid())){
-            docRef.update("upVote", upVoteCount - 1);
-            docRef.update("voted", sightingToDisplay.getVoted().put(user.getUid(), false));
-            addRealtimeUpdate();
-        }else {
-            voteTracker.put(user.getUid(), true);
-            docRef.update("upVote", upVoteCount + 1);
-            docRef.update("voted", sightingToDisplay.getVoted().put(user.getUid(), true));
-            addRealtimeUpdate();
-        }
     }
 
     public void onClickDownVote(View view) {
 
         DocumentReference docRef = db.collection("sighting").document(sightingId);
 
-
-        if(sightingToDisplay.getVoted().get(user.getUid()) != null && sightingToDisplay.getVoted().get(user.getUid())){
-            voteTracker.put(user.getUid(), false);
-            docRef.update("downVote", upVoteCount - 1);
-            docRef.update("voted", sightingToDisplay.setVoted(user.getUid(), false));
-            addRealtimeUpdate();
-        }else {
-            docRef.update("downVote", upVoteCount + 1);
-            docRef.update("voted", sightingToDisplay.getVoted().put(user.getUid(), true));
-            addRealtimeUpdate();
-        }
+        docRef.update("downVote", downVoteCount + 1);
+        addRealtimeUpdate();
     }
+
 
     // Gets the sighting's image from FireBase (if there is an image to retrieve)
     // https://firebase.google.com/docs/storage/android/download-files
