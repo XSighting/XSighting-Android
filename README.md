@@ -26,12 +26,12 @@ Notifications | When a sighting is created, all users will receive a notificatio
 
 ## Instructions for Use
 ### Installing the APK On Your Phone
-1. Go to [Release Page]
+1. Go to [Release Page](https://github.com/XSighting/XSighting-Android/releases)
 2. The latest release is announced on top. Scroll to the bottom of the release announcement to see the downloads
 3. Install the OS appropriate packages. 
 4. Move the downloaded ZIP file into your designated local directory
 5. Extract the ZIP file and its content into the same local directory
-6. Run the `.exe` file
+6. Run the `app-debug.exe` file
 
 
 ### Cloning Locally to Your Computer
