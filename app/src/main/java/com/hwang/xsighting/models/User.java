@@ -29,6 +29,7 @@ public class User {
     }
 
     // Adds a sighting to createdSightings
+    // nit: should be addCreatedSighting
     public void addCreatedsighting(String sightingId) {
         this.createdSightings.put(sightingId, true);
     }

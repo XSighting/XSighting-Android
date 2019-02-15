@@ -54,6 +54,10 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
       if (sighting.equals(sightings.get(i))){
         sightings.remove(i);
         notifyItemRemoved(i);
+        // be REALLY careful when iterating & removing!
+        // you probably want an i-- here to avoid skipping one element.
+        // It shouldn't matter in this case, since your sightings hopefully don't repeat...
+        // but you should be aware of it as an issue.
       }
     }
   }
@@ -95,6 +99,7 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
     String stringOfTime = dateFormat.format(toDate);
 
+    // indentation is weird for this comment
 //     Injects sighting's content into the view
     holder.timeStamp.setText(stringOfTime);
     holder.location.setText(sighting.getLocationName());
@@ -118,6 +123,8 @@ public class AllSightingsAdapter extends RecyclerView.Adapter<AllSightingsAdapte
     Intent goToViewSighting = new Intent(v.getContext(), ViewSighting.class);
 
     // https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
+    // As a general principle, make SIGHTING_ID a public static final String somewhere, so that you
+    // can reference it as a constant variable from this class and the view sighting class.
     goToViewSighting.putExtra("SIGHTING_ID", id);
     v.getContext().startActivity(goToViewSighting);
   }

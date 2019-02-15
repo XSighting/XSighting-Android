@@ -92,7 +92,8 @@ public class ViewSighting extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+                    // should do null checking on the document
+                    if (document != null && document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         sightingToDisplay = document.toObject(Sighting.class);
 
@@ -124,6 +125,7 @@ public class ViewSighting extends AppCompatActivity {
 
                         userName.setText(sightingToDisplay.getAuthorUsername());
                         description.setText(sightingToDisplay.getDescription());
+                        // Hardcoded, non-translatable string
                         title.setText("Sighted in " + sightingToDisplay.getLocationName());
                         date.setText(stringOfTime);
                         upVote.setText(displayUpVote);
@@ -160,6 +162,8 @@ public class ViewSighting extends AppCompatActivity {
     }
 
     public void onClickUpVote(View view){
+        // I wish this code were written to track the current user's votes, so that a user could
+        // only vote once per sighting.
 
         DocumentReference docRef = db.collection("sighting").document(sightingId);
 
