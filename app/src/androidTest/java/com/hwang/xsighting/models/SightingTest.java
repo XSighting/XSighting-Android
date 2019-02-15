@@ -10,6 +10,9 @@ import java.util.Date;
 import static org.junit.Assert.*;
 
 public class SightingTest {
+    // All this setup code should be in an @Before method, to keep your tests independent.
+    // Also, unclear why your model tests are in androidTest instead of test;
+    // this should all run fine not on an Android device.
     String authorId1 = "abc123";
     String authorUsername1 = "Test McTesterson";
     Timestamp timestamp1 = new Timestamp(new Date());

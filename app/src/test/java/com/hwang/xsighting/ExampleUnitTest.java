@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+// assertThat(thisTest.is().not().necessary());
 public class ExampleUnitTest {
   @Test
   public void addition_isCorrect() {

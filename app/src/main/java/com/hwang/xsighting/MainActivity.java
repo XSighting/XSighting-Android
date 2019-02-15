@@ -59,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
     if (user != null) {
 
       // User is signed in
-      Task<GetTokenResult> token = user.getIdToken(false);
+      // unused
       setNavigation();
       Log.i(TAG, user.toString());
     } else {
 
       // No user signed in, direct them to Login
+      // A little disorienting to make your user sign in immediately upon launching the app.
+      // A bit nicer to at least give context first about why.
       Log.i(TAG, "About to launch sign in");
 
       // Choose authentication providers
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
       } else {
         // Sign in failed
         Log.i(TAG, "Login Failed");
+        // more error handling would be good here!
       }
     }
   }
@@ -147,10 +150,12 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-  
-  private void updateRecyclerView() {
 
+  // Since this method's job is adding the listener, I'd rather call this setUpRecyclerView or
+  // similar, to avoid implying that calling this method will actually update what's shown.
+  private void updateRecyclerView() {
     recyclerView = findViewById(R.id.recyclerview_allsightings);
+    // nooo zombie code! get rid of it!
 //    recyclerView.setHasFixedSize(true);
 
     // Creates a layout manager and assigns it to the recycler view
@@ -206,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
               public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                   case R.id.navigation_home:
+                    // Similarly, you don't want to navigate home from the home page.
+                    // This means the back button loses all relevance.
                     Intent homeIntent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(homeIntent);
                     overridePendingTransition(0, 0);
@@ -247,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference docRef = db.collection("users").document(user.getUid());
     docRef
+            // I wish this stored multiple device tokens in a map! It's sad that I get notifications
+            // on only one of my devices, not both.
             .update("deviceToken", deviceToken)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
               @Override

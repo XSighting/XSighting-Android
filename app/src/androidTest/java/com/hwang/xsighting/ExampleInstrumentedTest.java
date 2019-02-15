@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
+// If you have an example test that does nothing, consider removing it, or if it is a test you care
+// about, change the class name.
 public class ExampleInstrumentedTest {
   @Test
   public void useAppContext() {

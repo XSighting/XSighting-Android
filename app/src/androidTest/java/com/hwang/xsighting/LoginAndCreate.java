@@ -46,6 +46,8 @@ Derrick looked into unit testing with Mockito because it only handles one activi
 Since we're dealing with sub-categories, activities are dependent on others.
 He attempted to turn the navigation into a fragment which would've allowed us to test easier but
 it was a no go. */
+
+// This test breaks if you've got a logged in user on the device :(
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class LoginAndCreate {
@@ -85,6 +87,7 @@ public class LoginAndCreate {
                                         withId(R.id.email_layout),
                                         0),
                                 0)));
+        // Very unclear why you're typing part of the email and then later typing the rest of the email.
         textInputEditText2.perform(scrollTo(), replaceText("test@tes"), closeSoftKeyboard());
 
         // Added a sleep statement to match the app's execution delay.

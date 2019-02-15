@@ -35,9 +35,12 @@
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTop" />
 
+        <!-- The fact that this is using com.example means it won't install for me, because another
+        app also used the default on my emulator! This domain should be "one that you control", say
+        the docs. -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
+            android:authorities="com.hwang.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

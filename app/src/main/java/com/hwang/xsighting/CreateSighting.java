@@ -394,6 +394,9 @@ public class CreateSighting extends AppCompatActivity {
                                 overridePendingTransition(0, 0);
                                 break;
                             case R.id.navigation_add_sighting:
+                                // If I keep hitting "add sighting", I'm creating new activites with
+                                // almost no context. Far better to disable the button on this
+                                // activity.
                                 Intent addSighting = new Intent(getBaseContext(), CreateSighting.class);
                                 startActivity(addSighting);
                                 overridePendingTransition(0, 0);
