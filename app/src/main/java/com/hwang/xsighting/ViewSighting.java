@@ -3,6 +3,7 @@ package com.hwang.xsighting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class ViewSighting extends AppCompatActivity {
     public void setNavigation(){
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navigation);
+                findViewById(R.id.navigation_temporary);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,15 +70,17 @@ public class ViewSighting extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                Intent homeIntent = new Intent(getBaseContext(), MainActivity.class);
+                                Intent homeIntent = new Intent();
                                 startActivity(homeIntent);
                                 overridePendingTransition(0, 0);
                                 break;
-                            case R.id.navigation_add_sighting:
-//                                Intent addSighting = new Intent(getBaseContext(), CreateSightingOriginal.class);
-//                                startActivity(addSighting);
+                                //TODO: need to figure a way out to add in this navigation
+//                            case R.id.navigation_add_sighting:
+//                                Intent addSighting = new Intent();
+//                                addSighting.putExtra("fragmentToLoad", "FRAGMENT_CREATE_SIGHTING");
+//                                setResult(RESULT_OK, addSighting);
 //                                overridePendingTransition(0, 0);
-                                break;
+//                                break;
                         }
                         return true;
                     }

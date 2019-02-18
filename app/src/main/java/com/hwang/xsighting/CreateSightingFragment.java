@@ -3,6 +3,7 @@ package com.hwang.xsighting;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,9 +89,7 @@ public class CreateSightingFragment extends Fragment {
   String currentPhotoPath = null;
   ImageView sightingImage;
 
-  //UI Components
-  private EditText descriptionEditText;
-  private TextView locationText;
+
 
 
   public CreateSightingFragment() {
@@ -112,13 +112,10 @@ public class CreateSightingFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     View view = inflater.inflate(R.layout.fragment_create_sighting, container, false);
     mActivity = getActivity();
-
     mContext = view.getContext();
-    descriptionEditText = view.findViewById(R.id.report_description);
 
     // Gets the imageView that will be updated when the user uploads a picture
     sightingImage = view.findViewById(R.id.sightingImage);
-    locationText =  view.findViewById(R.id.report_location);
 
     // Get Location
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(view.getContext());
@@ -128,10 +125,31 @@ public class CreateSightingFragment extends Fragment {
     // Set the username
     user = FirebaseAuth.getInstance().getCurrentUser();
 
+    view.findViewById(R.id.button_submit_report).setOnClickListener(mListener);
+    view.findViewById(R.id.takePictureButton).setOnClickListener(mListener);
+    view.findViewById(R.id.choosePictureButton).setOnClickListener(mListener);
+
+
     return view;
   }
 
-  //TODO: throws exception on super
+  private final View.OnClickListener mListener = new View.OnClickListener(){
+    public void onClick(View view){
+      switch (view.getId()){
+        case R.id.button_submit_report:
+          submitSighting();
+          break;
+        case R.id.takePictureButton:
+          takePicture();
+          break;
+        case R.id.choosePictureButton:
+          choosePictureFromFiles();
+          break;
+      }
+    }
+  };
+
+  //TODO: throws exception on super, Commenting out because I am uncertain on what this does and it doesn't seem to break anything
 //  @Override
 //  protected void onRestart(){
 //    super.onRestart();
@@ -141,10 +159,12 @@ public class CreateSightingFragment extends Fragment {
 //
 //  }
 
-  public void submitSighting(View view) {
+  public void submitSighting() {
+
+
     Date dateData = new Date();
     Timestamp timestamp = new Timestamp(dateData);
-
+    EditText descriptionEditText = mActivity.findViewById(R.id.report_description);
     String description = descriptionEditText.getText().toString();
     final String imageUrl = currentPhotoPath != null ? currentPhotoPath.replace("/", "") : null;
     Sighting sighting = new Sighting(user.getUid(), user.getDisplayName(), timestamp, geoPointLocation, lastLocation, imageUrl, description);
@@ -161,12 +181,11 @@ public class CreateSightingFragment extends Fragment {
 
                 // https://developer.android.com/guide/topics/ui/notifiers/toasts
                 // Toast success message
-                //TODO: getApplicationContext(); throws an error, need to fix
-//                Context context = getApplicationContext();
-//                CharSequence text = "Your sighting was saved.";
-//                int duration = Toast.LENGTH_LONG;
-//                Toast toast = Toast.makeText(context, text, duration);
-//                toast.show();
+                Context context = mContext.getApplicationContext();
+                CharSequence text = "Your sighting was saved.";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
 
                 // Redirect
                 //TODO: need to finish finish();
@@ -179,11 +198,11 @@ public class CreateSightingFragment extends Fragment {
                 Log.w(TAG, "Error adding document", e);
                 // Toast Failure message
                 //TODO: getApplicationContext(); needs to be fixed
-//                Context context = getApplicationContext();
-//                CharSequence text = "Something went wrong, please try again.";
-//                int duration = Toast.LENGTH_LONG;
-//                Toast toast = Toast.makeText(context, text, duration);
-//                toast.show();
+                Context context = mContext.getApplicationContext();
+                CharSequence text = "Something went wrong, please try again.";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
 
               }
             });
@@ -249,7 +268,7 @@ public class CreateSightingFragment extends Fragment {
                     lastLocation = addresses.get(0).getLocality();
 
                     // Set the location text
-
+                    TextView locationText =  mActivity.findViewById(R.id.report_location);
                     locationText.setText(lastLocation);
 
                     // Set the GeoPoint so location can be saved to Cloud Firestore Database
@@ -272,7 +291,7 @@ public class CreateSightingFragment extends Fragment {
   }
 
   // Allows the user to take and save a new picture
-  public void takePicture(View v) {
+  public void takePicture() {
 
     // Checks to see if required permission have been granted
     checkForPermissions();
@@ -327,7 +346,7 @@ public class CreateSightingFragment extends Fragment {
 
   // Lets the user pick an image from their file system
   // https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-  public void choosePictureFromFiles(View v) {
+  public void choosePictureFromFiles() {
 
     // Checks to see if the user has granted permissions to access the files
     checkForPermissions();

@@ -122,9 +122,13 @@ Android Studios, Java, Firebase Services, Google Play, Glide, Espresso Testing, 
 * [Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
 * [Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
 * [Fragments with Firebase](https://medium.com/@dekoservidoni/realtime-chats-with-firebase-in-android-a2a131f94e0c)
+* [Fragments multiple onClicks](https://stackoverflow.com/questions/35788127/multiple-buttons-in-fragment-how-to-redirect-to-a-different-layout)
 * [Firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
 * [Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
 * [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
 
 ## The Team
 [Jessica Lovell](https://github.com/JessLovell) | [Jeff Borda](https://github.com/jeffborda) | [Derrick Hwang](https://github.com/derrickhwang21) | [Evan Slaton](https://github.com/evanslaton)
+
+## Changelog
+2/17/19 - Changed layout structure to fragments

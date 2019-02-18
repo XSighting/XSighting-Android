@@ -116,10 +116,7 @@ public class SightingsFragment extends Fragment {
 
         // Successfully signed in
         createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-        /**
-         * Derrick - Was throwing an error
-         */
-//        setNavigation();
+
 
       } else {
         // Sign in failed

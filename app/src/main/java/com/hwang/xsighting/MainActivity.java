@@ -46,29 +46,46 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+//TODO: used for redirection
+//  private static final int VIEW_SIGHTING_ACTIVITY_REQUEST_CODE = 1331;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    loadFragment(new SightingsFragment());
 
 
-      /**
-       * Derrick - added
-       */
+      loadFragment(new SightingsFragment());
+
       BottomNavigationView bottomNavigationView = (BottomNavigationView)
               findViewById(R.id.navigation);
       bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationSelectedListener);
 
-
   }
 
+  //TODO: if we want to use this as a receiver for redirection, then we need to edit the onactivity for createsighting to onactivityresult
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//    super.onActivityResult(requestCode, resultCode, data);
+//
+//    // Check that it is the SecondActivity with an OK result
+//    if (requestCode == VIEW_SIGHTING_ACTIVITY_REQUEST_CODE) {
+//      if (resultCode == RESULT_OK) {
+//        String intentFragment = data.getStringExtra("fragmentToLoad");
+//        switch (intentFragment) {
+//          case "FRAGMENT_SIGHTINGS":
+//            loadFragment(new SightingsFragment());
+//            break;
+//          case "FRAGMENT_CREATE_SIGHTING":
+//            loadFragment(new CreateSightingFragment());
+//            break;
+//        }
+//
+//      }
+//    }
+//  }
 
-
-  /**
-   * Derrick - edited
-   */
    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
               @Override
