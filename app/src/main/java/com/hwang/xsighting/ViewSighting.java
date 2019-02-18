@@ -74,9 +74,9 @@ public class ViewSighting extends AppCompatActivity {
                                 overridePendingTransition(0, 0);
                                 break;
                             case R.id.navigation_add_sighting:
-                                Intent addSighting = new Intent(getBaseContext(), CreateSighting.class);
-                                startActivity(addSighting);
-                                overridePendingTransition(0, 0);
+//                                Intent addSighting = new Intent(getBaseContext(), CreateSightingOriginal.class);
+//                                startActivity(addSighting);
+//                                overridePendingTransition(0, 0);
                                 break;
                         }
                         return true;

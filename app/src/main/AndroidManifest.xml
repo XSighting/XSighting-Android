@@ -28,9 +28,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CreateSighting"
-            android:parentActivityName=".MainActivity" />
-
         <activity android:name=".ViewSighting"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTop" />

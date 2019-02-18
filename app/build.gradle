@@ -33,7 +33,7 @@ dependencies {
 
     // Google Play - Location
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    
+
     // Firebase Authentication
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
@@ -44,11 +44,12 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
 
     // https://github.com/bumptech/glide
-    implementation ("com.github.bumptech.glide:glide:4.8.0") {
+    implementation("com.github.bumptech.glide:glide:4.8.0") {
         exclude group: "com.android.support"
     }
 
     // Annotations
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     annotationProcessor 'androidx.annotation:annotation:1.0.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 

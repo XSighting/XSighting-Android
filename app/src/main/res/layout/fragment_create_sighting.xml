@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CreateSighting">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/header_report_sighting"
@@ -145,29 +144,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sightingImage">
 
-            <Button
-                android:id="@+id/takePictureButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/report_take_picture"
-                android:layout_weight="1"
-                android:onClick="takePicture"
-                android:text="@string/report_take_picture"
-                android:fontFamily="monospace"/>
+                <Button
+                    android:id="@+id/takePictureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/report_take_picture"
+                    android:layout_weight="1"
+                    android:onClick="takePicture"
+                    android:text="@string/report_take_picture"
+                    android:fontFamily="monospace"/>
 
-            <Button
-                android:id="@+id/choosePictureButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/report_choose_picture"
-                android:layout_weight="1"
-                android:onClick="choosePictureFromFiles"
-                android:text="@string/report_choose_picture"
-                android:fontFamily="monospace"/>
+                <Button
+                    android:id="@+id/choosePictureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/report_choose_picture"
+                    android:layout_weight="1"
+                    android:onClick="choosePictureFromFiles"
+                    android:text="@string/report_choose_picture"
+                    android:fontFamily="monospace"/>
             </LinearLayout>
 
             <ImageView
@@ -203,22 +202,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
-        android:focusable="true"
-        app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:itemTextColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

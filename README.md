@@ -121,6 +121,7 @@ Android Studios, Java, Firebase Services, Google Play, Glide, Espresso Testing, 
 * UFO Icon: Sci Fi by Alina Oleynik from the [Noun Project](https://thenounproject.com/)
 * [Bottom Navigation Bar](https://guides.codepath.com/android/Bottom-Navigation-Views)
 * [Fragments](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
+* [Fragments with Firebase](https://medium.com/@dekoservidoni/realtime-chats-with-firebase-in-android-a2a131f94e0c)
 * [Firestore adapter](https://codinginflow.com/tutorials/android/firebaseui-firestorerecycleradapter/part-3-firestorerecycleradapter)
 * [Text Appearance](https://gist.github.com/webserveis/c8c7e001c617829caa61dae385113e00)
 * [Date Format](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html)
