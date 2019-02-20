@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CreateSighting">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/scrollView"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/header_report_sighting"
@@ -24,23 +30,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_submit_report"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_report_sighting">
+    <!--<ScrollView-->
+        <!--android:id="@+id/scrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/button_submit_report"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/header_report_sighting">-->
 
         <LinearLayout
+            android:id="@+id/nestedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/button_submit_report"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_report_sighting">
+
 
 
             <LinearLayout
@@ -145,29 +157,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sightingImage">
 
-            <Button
-                android:id="@+id/takePictureButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/report_take_picture"
-                android:layout_weight="1"
-                android:onClick="takePicture"
-                android:text="@string/report_take_picture"
-                android:fontFamily="monospace"/>
+                <Button
+                    android:id="@+id/takePictureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/report_take_picture"
+                    android:layout_weight="1"
+                    android:onClick="takePicture"
+                    android:text="@string/report_take_picture"
+                    android:fontFamily="monospace"/>
 
-            <Button
-                android:id="@+id/choosePictureButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/report_choose_picture"
-                android:layout_weight="1"
-                android:onClick="choosePictureFromFiles"
-                android:text="@string/report_choose_picture"
-                android:fontFamily="monospace"/>
+                <Button
+                    android:id="@+id/choosePictureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/report_choose_picture"
+                    android:layout_weight="1"
+                    android:onClick="choosePictureFromFiles"
+                    android:text="@string/report_choose_picture"
+                    android:fontFamily="monospace"/>
             </LinearLayout>
 
             <ImageView
@@ -184,7 +196,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <Button
         android:id="@+id/button_submit_report"
@@ -197,28 +209,10 @@
         android:clickable="true"
         android:contentDescription="@string/button_create_sighting"
         android:focusable="true"
-        android:onClick="submitSighting"
         android:text="@string/report_submit"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/nestedView" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
-        android:focusable="true"
-        app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:itemTextColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navigation" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

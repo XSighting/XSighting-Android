@@ -28,7 +28,7 @@ import static org.hamcrest.core.IsNot.not;
 public class CreateReportTests {
 
     @Rule
-    public ActivityTestRule<CreateSighting> createSightingActivity = new ActivityTestRule<>(CreateSighting.class);
+    public ActivityTestRule<CreateSightingOriginal> createSightingActivity = new ActivityTestRule<>(CreateSightingOriginal.class);
     private String stringToBeTyped;
 
     @Before
@@ -39,7 +39,7 @@ public class CreateReportTests {
 
 
     /*
-     * UI elements tested in the order they appear on the CreateSighting activity from top to bottom.
+     * UI elements tested in the order they appear on the CreateSightingOriginal activity from top to bottom.
      */
 
     // Header TextView
