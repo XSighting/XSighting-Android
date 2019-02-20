@@ -3,6 +3,8 @@ package com.hwang.xsighting;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,222 +45,75 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-  private static FirebaseUser user;
-  private static final int RC_SIGN_IN = 482;
-  private static final String TAG = "MainActivity";
-  private AllSightingsAdapter adapter;
-  private RecyclerView recyclerView;
-  private RecyclerView.LayoutManager layoutManager;
-  private String deviceToken;
+
+//TODO: used for redirection
+//  private static final int VIEW_SIGHTING_ACTIVITY_REQUEST_CODE = 1331;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    user = FirebaseAuth.getInstance().getCurrentUser();
-    if (user != null) {
-
-      // User is signed in
-      Task<GetTokenResult> token = user.getIdToken(false);
-      setNavigation();
-      Log.i(TAG, user.toString());
-    } else {
-
-      // No user signed in, direct them to Login
-      Log.i(TAG, "About to launch sign in");
-
-      // Choose authentication providers
-      List<AuthUI.IdpConfig> providers = Arrays.asList(
-              new AuthUI.IdpConfig.EmailBuilder().build());
-
-      // Create and launch sign-in intent
-      startActivityForResult(
-              AuthUI.getInstance()
-                      .createSignInIntentBuilder()
-                      .setAvailableProviders(providers)
-                      .build(),
-              RC_SIGN_IN);
-
-      Log.i(TAG, "Sign up intent Sent");
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-
-    if (requestCode == RC_SIGN_IN) {
-      IdpResponse response = IdpResponse.fromResultIntent(data);
-
-      if (resultCode == RESULT_OK) {
-
-        // Successfully signed in
-        createNewUserIfUserDoesNotExist(FirebaseAuth.getInstance().getUid());
-        setNavigation();
-
-      } else {
-        // Sign in failed
-        Log.i(TAG, "Login Failed");
-      }
-    }
-  }
-
-  // Creates new user document in Firebase if current user doesn't exist
-  public void createNewUserIfUserDoesNotExist(final String loggedInUserId) {
-
-    user = FirebaseAuth.getInstance().getCurrentUser();
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference docRef = db.collection("users").document(loggedInUserId);
-    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-      @Override
-      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-        if (task.isSuccessful()) {
-          DocumentSnapshot document = task.getResult();
-          if (document.exists()) {
-            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-            // Update their device token for notifications
-            setDeviceToken();
-          } else {
-            Log.d(TAG, "No such document, creating user");
-
-            // Saves user to Firebase
-            db.collection("users").document(loggedInUserId)
-                    // Save user with DeviceToken
-                    .set(new User(deviceToken))
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                      @Override
-                      public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-
-                        // Update their device token for notifications
-                        setDeviceToken();
-                      }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                      @Override
-                      public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                      }
-                    });
-          }
-        } else {
-          Log.d(TAG, "get failed with ", task.getException());
-        }
-      }
-    });
-  }
-  
-  private void updateRecyclerView() {
-
-    recyclerView = findViewById(R.id.recyclerview_allsightings);
-//    recyclerView.setHasFixedSize(true);
-
-    // Creates a layout manager and assigns it to the recycler view
-    layoutManager = new LinearLayoutManager(this);
-    recyclerView.setLayoutManager(layoutManager);
-
-    // Specifies which adapter the recycler view should use
-    adapter = new AllSightingsAdapter(new ArrayList<Sighting>());
-    recyclerView.setAdapter(adapter);
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    // Grab sighting and sort by created time
-    db.collection("sighting").orderBy("createdTime", Query.Direction.ASCENDING)
-            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-              @Override
-              public void onEvent(@Nullable QuerySnapshot snapshots,
-                                  @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                  Log.w(TAG, "listen:error", e);
-                  return;
-                }
-
-                for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                  switch (dc.getType()) {
-                    case ADDED:
-                      Log.d(TAG, "New sighting: " + dc.getDocument().getData());
-                      adapter.add(dc.getDocument().toObject(Sighting.class), dc.getDocument().getId());
-                      break;
-                    case MODIFIED:
-                      Log.d(TAG, "Modified sighting: " + dc.getDocument().getData());
-                      break;
-                    case REMOVED:
-                      Log.d(TAG, "Removed sighting: " + dc.getDocument().getData());
-                      adapter.remove(dc.getDocument().toObject(Sighting.class));
-                      break;
-                  }
-                }
-
-              }
-            });
-  }
-
-  public void setNavigation(){
-
     setContentView(R.layout.activity_main);
-    BottomNavigationView bottomNavigationView = (BottomNavigationView)
-            findViewById(R.id.navigation);
-    bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-    updateRecyclerView();
-    bottomNavigationView.setOnNavigationItemSelectedListener(
+
+
+      loadFragment(new SightingsFragment());
+
+      BottomNavigationView bottomNavigationView = (BottomNavigationView)
+              findViewById(R.id.navigation);
+      bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationSelectedListener);
+
+  }
+
+  //TODO: if we want to use this as a receiver for redirection, then we need to edit the onactivity for createsighting to onactivityresult
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//    super.onActivityResult(requestCode, resultCode, data);
+//
+//    // Check that it is the SecondActivity with an OK result
+//    if (requestCode == VIEW_SIGHTING_ACTIVITY_REQUEST_CODE) {
+//      if (resultCode == RESULT_OK) {
+//        String intentFragment = data.getStringExtra("fragmentToLoad");
+//        switch (intentFragment) {
+//          case "FRAGMENT_SIGHTINGS":
+//            loadFragment(new SightingsFragment());
+//            break;
+//          case "FRAGMENT_CREATE_SIGHTING":
+//            loadFragment(new CreateSightingFragment());
+//            break;
+//        }
+//
+//      }
+//    }
+//  }
+
+   private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
               @Override
               public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
                 switch (item.getItemId()) {
                   case R.id.navigation_home:
-                    Intent homeIntent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(homeIntent);
-                    overridePendingTransition(0, 0);
-                    break;
+                    // Possibly add in toolbar.setTitle("Home")
+                    fragment = new SightingsFragment();
+                    loadFragment(fragment);
+                    return true;
                   case R.id.navigation_add_sighting:
-                    Intent addSighting = new Intent(getBaseContext(), CreateSighting.class);
-                    startActivity(addSighting);
-                    overridePendingTransition(0, 0);
-                    break;
+                  // Possibly add in toolbar.setTitle("Add Sighting");
+                   fragment = new CreateSightingFragment();
+                   loadFragment(fragment);
+                    return true;
                 }
-                return true;
+                return false;
               }
-            });
-  }
+   };
 
-  public void setDeviceToken() {
-    FirebaseInstanceId.getInstance().getInstanceId()
-            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-              @Override
-              public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if (!task.isSuccessful()) {
-                  Log.w(TAG, "getInstanceId failed", task.getException());
-                  return;
-                }
-
-                // Get new Instance ID token
-                deviceToken = task.getResult().getToken();
-                updateDeviceTokenInDatabase();
-
-                // Log and toast
-                Log.d(TAG, deviceToken);
-              }
-            });
+   private void loadFragment(Fragment fragment){
+     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+     transaction.replace(R.id.frame_container, fragment);
+     transaction.addToBackStack(null);
+     transaction.commit();
+   }
 
 
-  }
 
-  private void updateDeviceTokenInDatabase() {
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference docRef = db.collection("users").document(user.getUid());
-    docRef
-            .update("deviceToken", deviceToken)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-              @Override
-              public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Update deviceToken");
-              }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-              @Override
-              public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error updating deviceToken", e);
-              }
-            });
-  }
 }
